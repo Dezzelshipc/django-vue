@@ -2,6 +2,10 @@
   <div>
     <img alt="Vue logo" src="./assets/logo.png">
     asdasdasdasdajiof jsif jois;jfj2983u904u0923u0
+    <div>
+      <button @click="check = !check">asdads</button>
+      {{ check }}
+    </div>
   </div>
 </template>
 
@@ -11,6 +15,11 @@ export default {
   name: 'App',
   components: {
     
+  },
+  data() {
+    return {
+      check: false,
+    }
   }
 }
 </script>

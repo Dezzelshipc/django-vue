@@ -20,8 +20,11 @@ db = client.data
 
 # Create your views here.
 
+def api_view(request):
+    return HttpResponse("This is api page")
+
 def debug_view(request):
-    debug_task.delay()
+    debug_task()
     print(db)
     visit = {
         'time': str(datetime.datetime.now()),
