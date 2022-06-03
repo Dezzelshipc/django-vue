@@ -1,20 +1,22 @@
 <template>
-  <div>
-    <img alt="Vue logo" src="./assets/logo.png">
-    asdasdasdasdajiof jsif jois;jfj2983u904u0923u0
+  <div id="app">
     <div>
       <button @click="check = !check">asdads</button>
       {{ check }}
     </div>
+    <TasksHandler />
   </div>
 </template>
 
 <script>
+import TasksHandler from './components/TasksHandler.vue'
+
+
 
 export default {
   name: 'App',
   components: {
-    
+    TasksHandler,
   },
   data() {
     return {
