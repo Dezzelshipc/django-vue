@@ -5,18 +5,21 @@
       {{ check }}
     </div>
     <TasksHandler />
+
+    <WritePage />
   </div>
 </template>
 
 <script>
 import TasksHandler from './components/TasksHandler.vue'
-
+import WritePage from './components/WritePage.vue'
 
 
 export default {
   name: 'App',
   components: {
     TasksHandler,
+    WritePage,
   },
   data() {
     return {
