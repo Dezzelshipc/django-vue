@@ -1,29 +1,22 @@
 <template>
   <div id="app">
-    <div>
-      <button @click="check = !check">asdads</button>
-      {{ check }}
-    </div>
-    <TasksHandler />
-
-    <WritePage />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import TasksHandler from './components/TasksHandler.vue'
-import WritePage from './components/WritePage.vue'
-
-
 export default {
   name: 'App',
-  components: {
-    TasksHandler,
-    WritePage,
-  },
   data() {
     return {
       check: false,
+    }
+  },
+  mounted() {
+    if (localStorage.username) {
+      this.$router.push('/home')
+    } else {
+      this.$router.push('/login')
     }
   }
 }

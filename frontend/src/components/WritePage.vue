@@ -1,5 +1,7 @@
 <template>
 <div>
+    <router-link to="/home">Home</router-link>
+    <br>
     <button @click="start">Start</button>
     <button @click="stop">Stop</button>
     <button @click="wordNumber++">add</button>
@@ -13,7 +15,7 @@
         </span>
     </div>
     
-    <input type="text" v-model="inText" @keypress.space="next" @keypress="(event) => { (elapsedTime < 0) ? event.preventDefault() : '' }">
+    <input type="text" v-model="inText" @keypress.space="next" @keypress="press($event)">
     <br>
     {{ formattedElapsedTime }} {{ elapsedTime }} {{ this.timer }}
     <br>
@@ -27,7 +29,7 @@
     <br>
     Победа: {{ win }} Ошибки: {{ miss }}
     <br>
-    Знаков в минуту: {{ (lettersCount * 60000 / elapsedTime).toFixed(2) }}
+    Знаков в минуту: {{ (lettersCount * 60000 / elapsedTime).toFixed(2) }} Знаки: {{ lettersCount }}
 </div>
 </template>
 
@@ -55,7 +57,7 @@ export default {
             this.elapsedTime = -3000
             this.wordNumber = 0
             let text = "Сосны обступали тропу плотно, и, хотя истыканное их верхушками небо светилось голубым, в лесу было сумрачно. По тропинке вперёд бежали муравьи, большие, красные, по своим каким-то муравьиным делам.";
-            this.lettersCount = text.length
+            this.lettersCount = 0
             this.text = text.split(' ')
             this.started = 1;
 
@@ -84,6 +86,13 @@ export default {
         reset() {
             this.elapsedTime = 0;
         },
+        press(event) {
+            if (this.elapsedTime < 0 || this.timer === undefined) {
+                event.preventDefault()
+            } else {
+                this.lettersCount++
+            }
+        }
     },
     computed: {
         isCorrect() {
