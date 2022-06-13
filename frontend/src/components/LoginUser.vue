@@ -39,24 +39,59 @@
             </router-link>
         </td>
     </tr>
+    <tr style="text-align: center">
+        <td>
+            {{ textResponse }}
+        </td>
+    </tr>
     </tbody>
 </table>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     data() {
         return {
             showPassword: false,
             username: '',
             password: '',
+            textResponse: '',
         }
     },
     methods: {
-        login() {
-            this.$router.push('/home')
+        async login() {
+
+            try {
+                const response = await axios.put(`/api/users/`, {
+                    username: this.username,
+                    password: this.password,
+                })
+
+                switch (response.status) {
+                    case 200:
+                        localStorage.setItem('usernameW', this.username)
+                        this.textResponse = 'Success!'
+                        this.$router.push('/home')
+                        break
+                    default:
+                        console.log(response.data)
+                        this.textResponse = 'Error'
+                }
+            } catch(error) {
+                console.log(error)
+
+                switch (error.response.status) {
+                    case 401:
+                        this.textResponse = 'Username or password error'
+                        break
+                    default:
+                        this.textResponse = error
+                }
+            }
         }
-    }
+    },
 }
 </script>
 

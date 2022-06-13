@@ -1,98 +1,45 @@
-
-import os
-
-import datetime
-
-import json
-
-from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 
-from backend.celery import debug_task
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
-from .serializers import TaskSerializer
+from .serializers import UserSerializer, UserRegisterSerializer, UserSerializerAll
 
-from .models import Task
-# Mongo
-
-from pymongo import MongoClient
-
-client = MongoClient('mongo', 27017)
-db = client.data
+from .models import User
 
 # Create your views here.
 
 def api_view(request):
     return HttpResponse("This is api page")
 
-def debug_view(request):
-    debug_task()
-    print(db)
-    visit = {
-        'time': str(datetime.datetime.now()),
-    }
-
-    # add a visit record
-    db.visits.insert_one(visit)
-
-    # retrieve all visits
-    all_visits = list(db.visits.find({}))
-
-    return HttpResponse(all_visits)
-
 def visits_view(request):
     return JsonResponse({"all": [1,2,3]})
 
 @csrf_exempt
-def tasks(request):
-    '''
-    List all task snippets
-    '''
-    if(request.method == 'GET'):
-        # get all the tasks
-        tasks = Task.objects.all()
-        # serialize the task data
-        serializer = TaskSerializer(tasks, many=True)
-        # return a Json response
-        return JsonResponse(serializer.data,safe=False)
-    elif(request.method == 'POST'):
-        # parse the incoming information
+def user(request):
+    if(request.method == 'POST'):
         data = JSONParser().parse(request)
-        # instanciate with the serializer
-        serializer = TaskSerializer(data=data)
-        # check if the sent information is okay
-        if(serializer.is_valid()):
-            # if okay, save it on the database
-            serializer.save()
-            # provide a Json Response with the data that was saved
-            return JsonResponse(serializer.data, status=201)
-            # provide a Json Response with the necessary error information
-        return JsonResponse(serializer.errors, status=400)
+        serializer = UserRegisterSerializer(data=data)
+
+        if not serializer.is_valid():
+            return JsonResponse(serializer.errors, status=400)
+            
+        serializer.save()
+        return JsonResponse(serializer.data, status=201)
+        
+    elif (request.method == 'PUT'):
+        data = JSONParser().parse(request)
+        serializer = UserSerializer(data=data)
+
+        if serializer.is_valid():
+            return HttpResponse(status=200)
+        else:
+            return HttpResponse(status=401)
+    return HttpResponse(status=404)
 
 @csrf_exempt
-def task_detail(request, pk):
-    try:
-        # obtain the task with the passed id.
-        task = Task.objects.get(pk=pk)
-    except:
-        # respond with a 404 error message
-        return HttpResponse(status=404)  
-    if(request.method == 'PUT'):
-        # parse the incoming information
-        data = JSONParser().parse(request)  
-        # instanciate with the serializer
-        serializer = TaskSerializer(task, data=data)
-        # check whether the sent information is okay
-        if(serializer.is_valid()):  
-            # if okay, save it on the database
-            serializer.save() 
-            # provide a JSON response with the data that was submitted
-            return JsonResponse(serializer.data, status=201)
-        # provide a JSON response with the necessary error information
-        return JsonResponse(serializer.errors, status=400)
-    elif(request.method == 'DELETE'):
-        # delete the task
-        task.delete() 
-        # return a no content response.
-        return HttpResponse(status=204) 
+def users_all(request):
+    if(request.method == 'GET'):
+        users = User.objects.all()
+        serializer = UserSerializerAll(users, many=True)
+        return JsonResponse(serializer.data, safe=False)
+    return HttpResponse(status=404)  

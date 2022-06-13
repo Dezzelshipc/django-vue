@@ -92,7 +92,7 @@ export default {
             } else {
                 this.lettersCount++
             }
-        }
+        },
     },
     computed: {
         isCorrect() {

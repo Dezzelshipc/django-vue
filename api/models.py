@@ -1,14 +1,10 @@
 from django.db import models
 
-# Create your models here.
-class Task(models.Model):
-    #title
-    title = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True) #description
-    completed = models.BooleanField(default=False)
-    #completed
-    created_at = models.DateTimeField(auto_now_add=True) #created_at
+class User(models.Model):
+    username = models.CharField(max_length=128)
+    password = models.CharField(max_length=128)
+    email = models.EmailField(max_length=128)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        #return the task title
-        return self.title
+        return self.username

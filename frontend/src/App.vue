@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    {{ $route }}
     <router-view></router-view>
   </div>
 </template>
@@ -12,13 +13,21 @@ export default {
       check: false,
     }
   },
-  mounted() {
-    if (localStorage.username) {
+  updated() {
+    if (!localStorage.getItem('usernameW') && this.$route.path !== '/register') {
+      this.$router.push('/login')
+    } else if (localStorage.getItem('usernameW') && (this.$route.path === '/login' || this.$route.path === '/register')) {
+      this.$router.push('/home')
+    }
+  },
+  created() {
+    console.log(localStorage.getItem('usernameW'))
+    if (localStorage.getItem('usernameW')) {
       this.$router.push('/home')
     } else {
       this.$router.push('/login')
     }
-  }
+  },
 }
 </script>
 
