@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    {{ $route }}
     <router-view></router-view>
   </div>
 </template>

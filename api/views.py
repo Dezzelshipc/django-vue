@@ -33,7 +33,7 @@ def user(request):
         if serializer.is_valid():
             return HttpResponse(status=200)
         else:
-            return HttpResponse(status=401)
+            return JsonResponse(serializer.errors, status=400)
     return HttpResponse(status=404)
 
 @csrf_exempt

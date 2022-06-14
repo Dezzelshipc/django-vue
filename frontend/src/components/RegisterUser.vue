@@ -49,7 +49,7 @@
             </router-link>
         </td>
     </tr>
-    <tr style="text-align: center">
+    <tr style="text-align: center; white-space: pre;">
         <td>
             {{ textResponse }}
         </td>
@@ -73,38 +73,18 @@ export default {
   },
   methods: {
     async register() {
-      try {
-        const response = await axios.post('/api/users/', {
+        await axios.post('/api/users/', {
           username: this.username,
           password: this.password,
           email: this.email
+        }).then(response => {
+          console.log(response)
+          this.textResponse = 'Success!'
+        }).catch(error => {
+          console.log(error)
+          this.textResponse = Object.values( error.response.data ).map(x => x[0]).join('\r\n')
+          console.log(this.textResponse)
         })
-
-        switch (response.status) {
-          case 201:
-            this.textResponse = 'Success!'
-            break
-          default:
-            console.log(response.data)
-            this.textResponse = 'Error'
-        }
-      } catch(error) {
-        console.log(error)
-
-        switch (error.response.status) {
-          case 201:
-            this.textResponse = 'Success!'
-            break
-          case 400:
-            this.textResponse = 'Registration error'
-            break
-          case 409:
-            this.textResponse = 'Username already exists'
-            break
-          default:
-            this.textResponse = error
-        }
-      }
     }
   },
 }

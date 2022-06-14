@@ -39,7 +39,7 @@
             </router-link>
         </td>
     </tr>
-    <tr style="text-align: center">
+    <tr style="text-align: center; white-space: pre;">
         <td>
             {{ textResponse }}
         </td>
@@ -62,34 +62,22 @@ export default {
     },
     methods: {
         async login() {
+            await axios.put(`/api/users/`, {
+                username: this.username,
+                password: this.password,
+            }).then(response =>{
+                console.log(response)
 
-            try {
-                const response = await axios.put(`/api/users/`, {
-                    username: this.username,
-                    password: this.password,
-                })
-
-                switch (response.status) {
-                    case 200:
-                        localStorage.setItem('usernameW', this.username)
-                        this.textResponse = 'Success!'
-                        this.$router.push('/home')
-                        break
-                    default:
-                        console.log(response.data)
-                        this.textResponse = 'Error'
-                }
-            } catch(error) {
+                localStorage.setItem('usernameW', this.username)
+                this.textResponse = 'Success!'
+                this.$router.push('/home')
+            }).catch(error => {
                 console.log(error)
-
-                switch (error.response.status) {
-                    case 401:
-                        this.textResponse = 'Username or password error'
-                        break
-                    default:
-                        this.textResponse = error
-                }
-            }
+                this.textResponse = Object.values( error.response.data ).map(x => x[0]).join('\r\n')
+                console.log(this.textResponse)
+                
+                // this.textResponse = 'Username or password error'
+            })
         }
     },
 }

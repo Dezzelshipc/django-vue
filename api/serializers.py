@@ -1,3 +1,4 @@
+import email
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password, check_password
 from .models import User
@@ -11,14 +12,14 @@ class UserRegisterSerializer(serializers.HyperlinkedModelSerializer):
 
     def validate_email(self, email):
         if User.objects.filter(email=email).exists():
-            raise serializers.ValidationError("This email has already registered")
+            raise serializers.ValidationError("This email has been already registered")
         return email
 
-    def validate_username(self, username):
-        if username in ['null', 'undefined']:
+    def validate_username(self, username: str):
+        if username.lower() in ['null', 'undefined', 'all']:
             raise serializers.ValidationError("This username is forbidden to use")
         if User.objects.filter(username=username).exists():
-            raise serializers.ValidationError("This username has already registered")
+            raise serializers.ValidationError("This username has been already registered")
         return username
 
     def create(self, validated_data):
@@ -31,15 +32,13 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['username', 'password']
 
     def validate_username(self, username):
-        if username in ['null', 'undefined']:
-            raise serializers.ValidationError("This username is forbidden to use")
         if not User.objects.filter(username=username).exists():
-            raise serializers.ValidationError("This username doesn't exists")
+            raise serializers.ValidationError("Wrong username or password")
         return username
 
     def validate(self, attrs):
         if not check_password(attrs['password'], User.objects.filter(username=attrs['username']).values().get()['password']):
-            raise serializers.ValidationError("This user doesn't exists")
+            raise serializers.ValidationError("Wrong username or password")
         return super().validate(attrs)
 
 class UserSerializerAll(serializers.HyperlinkedModelSerializer):
