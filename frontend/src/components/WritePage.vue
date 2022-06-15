@@ -2,7 +2,7 @@
 <div>
     <router-link to="/home">Home</router-link>
     <br>
-    <button @click="start">Start</button>
+    <button class="btn btn-primary" @click="start">Start</button>
     <button @click="stop">Stop</button>
     <button @click="wordNumber++">add</button>
     <div>
@@ -30,25 +30,36 @@
     Победа: {{ win }} Ошибки: {{ miss }}
     <br>
     Знаков в минуту: {{ (lettersCount * 60000 / elapsedTime).toFixed(2) }} Знаки: {{ lettersCount }}
+    <Button></Button>
 </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import Button from 'primevue/button'
 
 export default {
+    components: {
+        Button,
+    },
+    inject: [
+        ['assets']
+    ],
     data() {
         return {
-            inText: ref(''),
-            started: ref(0),
-            wordNumber: ref(0),
-            text: ref([]),
-            win: ref(0),
-            miss: ref(0),
-            lettersCount: ref(0),
+            inText: '',
+            started: 0,
+            wordNumber: 0,
+            text: [],
+            music: [],
+            win: 0,
+            miss: 0,
+            lettersCount: 0,
 
-            elapsedTime: ref(-3000),
-            timer: ref(undefined),
+            elapsedTime: -3000,
+            timer: undefined,
+            audios: [
+                //Сюда new Audio('url'),
+            ],
         }
     },
     methods: {
@@ -56,11 +67,15 @@ export default {
             this.inText = ''
             this.elapsedTime = -3000
             this.wordNumber = 0
-            let text = "Сосны обступали тропу плотно, и, хотя истыканное их верхушками небо светилось голубым, в лесу было сумрачно. По тропинке вперёд бежали муравьи, большие, красные, по своим каким-то муравьиным делам.";
+            let text = "Сосны обступали тропу плотно, и, хотя истыканное их верхушками небо светилось голубым, в лесу было сумрачно. По тропинке вперёд бежали муравьи, большие, красные, по своим каким-то муравьиным делам."
+            let music = "Db D Db D Bb G * * Bb G * * D G * * Db D Db D Bb G * * Bb G * * D G * * Db D Db D Bb G * * Bb G * * D G * * A Bb A Bb G D * * Db D G Bb Db * * * Db D Db D Bb G * * Bb G * * D G * * A Bb A Bb G D * * Db D G Bb Db * * * Db D Db D Bb G * * Bb G * * D G * * Db D Db D Bb G * * Bb G * * D G * *"
             this.lettersCount = 0
             this.text = text.split(' ')
+            this.music = music.split(' ')
             this.started = 1;
 
+            (new Audio(`https://assets.mixkit.co/sfx/preview/mixkit-simple-countdown-922.mp3`)).play()
+            
             if (!this.timer) {
                 this.timer = setInterval(() => {
                     this.elapsedTime += 10
@@ -91,6 +106,15 @@ export default {
                 event.preventDefault()
             } else {
                 this.lettersCount++
+                
+                if (this.isCorrect) {
+                    let currentNote = this.lettersCount % this.music.length
+                    if (this.music[currentNote] !== '*') {
+                        let audio = new Audio(`http://localhost:8000/api/notes/1/notes_${this.music[currentNote]}.mp3`)
+                        console.log(audio, this.music[this.lettersCount])
+                        audio.play()
+                    }
+                }
             }
         },
     },

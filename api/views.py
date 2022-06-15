@@ -1,4 +1,7 @@
-from django.http import HttpResponse, JsonResponse
+import mimetypes
+from os import path
+from urllib import response
+from django.http import HttpResponse, JsonResponse, HttpResponseNotFound
 
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
@@ -43,3 +46,28 @@ def users_all(request):
         serializer = UserSerializerAll(users, many=True)
         return JsonResponse(serializer.data, safe=False)
     return HttpResponse(status=404)  
+
+
+@csrf_exempt
+def notes_handler(request, note):
+    script_dir = path.dirname(__file__)
+    file_location = path.join(script_dir, f'assets/notes/{note}')
+    try:
+        with open(file_location, 'rb') as f:
+            file_data = f.read()
+            
+        response = HttpResponse(file_data, content_type='audio/mp3')
+        response['Content-Disposition'] = f'attachment; filename="{note}"'
+        
+    except IOError:
+        response = HttpResponseNotFound('<h1>File not exist</h1>')
+
+    return response
+
+@csrf_exempt
+def notes_player(response, note):
+    return HttpResponse(f"""
+        <audio controls autoplay name="media">
+            <source src="1/{note}" type="audio/mpeg">
+        </audio>
+        """)
