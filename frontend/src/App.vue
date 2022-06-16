@@ -20,10 +20,7 @@ export default {
     }
   },
   created() {
-    console.log(localStorage.getItem('usernameW'))
-    if (localStorage.getItem('usernameW')) {
-      this.$router.push('/home')
-    } else {
+    if (!localStorage.getItem('usernameW')) {
       this.$router.push('/login')
     }
   },

@@ -2,6 +2,16 @@
 <div>
     <router-link to="/home">Home</router-link>
     <br>
+    <div>
+        <input type="radio" value=1 v-model="mode">
+        <label>Text + Music</label>
+        <br>
+        <input type="radio" value=2 v-model="mode">
+        <label>Random top 1000 russian words</label>
+        <br>
+        {{ mode }}
+    </div>
+    <br>
     <button class="btn btn-primary" @click="start">Start</button>
     <button @click="stop">Stop</button>
     <button @click="wordNumber++">add</button>
@@ -60,28 +70,40 @@ export default {
 
             elapsedTime: -3000,
             timer: undefined,
+            mode: 1,
         }
     },
     methods: {
         async start() {
-            this.inText = ''
-            this.elapsedTime = -3000
-            this.wordNumber = 0
-            const response = await axios.get('/api/assets/json/music.json')
-            
-            const data = response.data
+            try {
+                this.inText = ''
+                this.elapsedTime = -3000
+                this.wordNumber = 0
 
-            this.lettersCount = 0
-            this.text = data[0].text.split(' ')
-            this.music = data[0].music.split(' ')
-            this.started = 1;
+                this.lettersCount = 0
+                if (this.mode == 1) {
+                    const response = await axios.get('/api/assets/json/music.json')
+                    const data = response.data
 
-            (new Audio(`/api/assets/audio/count_down.mp3`)).play()
-            
-            if (!this.timer) {
-                this.timer = setInterval(() => {
-                    this.elapsedTime += 10
-                }, 10)
+                    this.text = data[0].text.split(' ')
+                    this.music = data[0].music.split(' ')
+                } else if (this.mode == 2) {
+                    const response = await axios.get('/api/assets/json/words.json')
+                    const data = response.data
+                    
+                    this.text = data.sort(() => 0.5 - Math.random()).slice(0, 30 + Math.floor( Math.random() * 5))
+                }
+                this.started = 1;
+
+                (new Audio(`/api/assets/audio/count_down.mp3`)).play()
+                
+                if (!this.timer) {
+                    this.timer = setInterval(() => {
+                        this.elapsedTime += 10
+                    }, 10)
+                }
+            } catch {
+                this.text = ['Server', 'error']
             }
         },
         next(event) {
@@ -109,7 +131,7 @@ export default {
             } else {
                 this.lettersCount++
                 
-                if (this.isCorrect) {
+                if (this.isCorrect && this.music.length && this.mode === 1) {
                     let currentNote = this.lettersCount % this.music.length
                     if (this.music[currentNote] !== '*') {
                         let audio = new Audio(`/api/assets/audio/notes_${this.music[currentNote]}.mp3`)
@@ -121,7 +143,7 @@ export default {
     },
     computed: {
         isCorrect() {
-            return this.started ? this.text[this.wordNumber].startsWith(this.inText.trim()) : 0
+            return this.started && this.text.length ? this.text[this.wordNumber].startsWith(this.inText.trim()) : 0
         },
         formattedElapsedTime() {
             const date = new Date(null);
