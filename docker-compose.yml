@@ -11,19 +11,9 @@ services:
     networks:
       - nginx_network
 
-  # mongo:
-  #   image: mongo:3
-  #   container_name: mongo
-  #   volumes:
-  #     - .././data/mongo:/data/db
-  #   ports:
-  #     - '27017:27017'
-  #   networks:
-  #     - nginx_network
-
   web:
     build: .
-    command: sh -c "python3 manage.py makemigrations && python3 /code/manage.py migrate --noinput && gunicorn backend.wsgi --bind 0.0.0.0:8000 -w 4"
+    command: sh -c "python manage.py makemigrations && python /code/manage.py migrate --noinput && gunicorn backend.wsgi --bind 0.0.0.0:8000 -w 4"
     volumes:
       - .:/code
     # ports:
@@ -31,7 +21,6 @@ services:
     depends_on:
       - db
       - redis
-    #  - mongo
     networks:
       - nginx_network
 
@@ -46,7 +35,6 @@ services:
       - web
       - db
       - redis
-    #  - mongo
     networks:
       - nginx_network
 

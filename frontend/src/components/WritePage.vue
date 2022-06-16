@@ -37,6 +37,9 @@
 <script>
 import Button from 'primevue/button'
 
+
+
+import axios from 'axios'
 export default {
     components: {
         Button,
@@ -57,24 +60,23 @@ export default {
 
             elapsedTime: -3000,
             timer: undefined,
-            audios: [
-                //Сюда new Audio('url'),
-            ],
         }
     },
     methods: {
-        start() {
+        async start() {
             this.inText = ''
             this.elapsedTime = -3000
             this.wordNumber = 0
-            let text = "Сосны обступали тропу плотно, и, хотя истыканное их верхушками небо светилось голубым, в лесу было сумрачно. По тропинке вперёд бежали муравьи, большие, красные, по своим каким-то муравьиным делам."
-            let music = "Db D Db D Bb G * * Bb G * * D G * * Db D Db D Bb G * * Bb G * * D G * * Db D Db D Bb G * * Bb G * * D G * * A Bb A Bb G D * * Db D G Bb Db * * * Db D Db D Bb G * * Bb G * * D G * * A Bb A Bb G D * * Db D G Bb Db * * * Db D Db D Bb G * * Bb G * * D G * * Db D Db D Bb G * * Bb G * * D G * *"
+            const response = await axios.get('/api/assets/json/music.json')
+            
+            const data = response.data
+
             this.lettersCount = 0
-            this.text = text.split(' ')
-            this.music = music.split(' ')
+            this.text = data[0].text.split(' ')
+            this.music = data[0].music.split(' ')
             this.started = 1;
 
-            (new Audio(`https://assets.mixkit.co/sfx/preview/mixkit-simple-countdown-922.mp3`)).play()
+            (new Audio(`/api/assets/audio/count_down.mp3`)).play()
             
             if (!this.timer) {
                 this.timer = setInterval(() => {
@@ -110,8 +112,7 @@ export default {
                 if (this.isCorrect) {
                     let currentNote = this.lettersCount % this.music.length
                     if (this.music[currentNote] !== '*') {
-                        let audio = new Audio(`http://localhost:8000/api/notes/1/notes_${this.music[currentNote]}.mp3`)
-                        console.log(audio, this.music[this.lettersCount])
+                        let audio = new Audio(`/api/assets/audio/notes_${this.music[currentNote]}.mp3`)
                         audio.play()
                     }
                 }

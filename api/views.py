@@ -1,5 +1,5 @@
-import mimetypes
-from os import path
+import os
+import json
 from urllib import response
 from django.http import HttpResponse, JsonResponse, HttpResponseNotFound
 
@@ -49,25 +49,32 @@ def users_all(request):
 
 
 @csrf_exempt
-def notes_handler(request, note):
-    script_dir = path.dirname(__file__)
-    file_location = path.join(script_dir, f'assets/notes/{note}')
+def notes_handler(request, path):
+    script_dir = os.path.dirname(__file__)
+    file_location = os.path.join(script_dir, f'assets/audio/{path}')
     try:
         with open(file_location, 'rb') as f:
             file_data = f.read()
             
         response = HttpResponse(file_data, content_type='audio/mp3')
-        response['Content-Disposition'] = f'attachment; filename="{note}"'
         
     except IOError:
         response = HttpResponseNotFound('<h1>File not exist</h1>')
 
     return response
 
+
 @csrf_exempt
-def notes_player(response, note):
-    return HttpResponse(f"""
-        <audio controls autoplay name="media">
-            <source src="1/{note}" type="audio/mpeg">
-        </audio>
-        """)
+def json_handler(request, path):
+    script_dir = os.path.dirname(__file__)
+    file_location = os.path.join(script_dir, f'assets/json/{path}')
+    try:
+        with open(file_location) as f:
+            file_data = json.load(f)
+
+        response = JsonResponse(file_data, safe=False)
+        
+    except IOError:
+        response = HttpResponseNotFound('<h1>File not exist</h1>')
+
+    return response
