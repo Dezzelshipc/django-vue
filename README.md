@@ -47,7 +47,4 @@ docker-compose up --build [container-name]
 #### Container names
 - frontend
 - web
-- mongo
-- db
-- redis
 - celery (tba)

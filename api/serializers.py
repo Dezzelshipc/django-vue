@@ -1,4 +1,6 @@
+from dataclasses import field
 import email
+from pyexpat import model
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password, check_password
 from .models import User
@@ -44,4 +46,9 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class UserSerializerAll(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'password', 'email', 'created_at']
+        fields = ['id', 'username', 'password', 'email', 'created_at', 'bestSpeed']
+
+class UserScoreSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['bestSpeed']

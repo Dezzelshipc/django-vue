@@ -1,21 +1,16 @@
 import os
 import json
 from urllib import response
+from django import http
 from django.http import HttpResponse, JsonResponse, HttpResponseNotFound
 
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
-from .serializers import UserSerializer, UserRegisterSerializer, UserSerializerAll
+from .serializers import UserScoreSerializer, UserSerializer, UserRegisterSerializer, UserSerializerAll
 
 from .models import User
 
 # Create your views here.
-
-def api_view(request):
-    return HttpResponse("This is api page")
-
-def visits_view(request):
-    return JsonResponse({"all": [1,2,3]})
 
 @csrf_exempt
 def user(request):
@@ -35,8 +30,7 @@ def user(request):
 
         if serializer.is_valid():
             return HttpResponse(status=200)
-        else:
-            return JsonResponse(serializer.errors, status=400)
+        return JsonResponse(serializer.errors, status=400)
     return HttpResponse(status=404)
 
 @csrf_exempt
@@ -78,3 +72,26 @@ def json_handler(request, path):
         response = HttpResponseNotFound('<h1>File not exist</h1>')
 
     return response
+
+
+@csrf_exempt
+def username_data(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except:
+        return HttpResponse(status=404)
+
+    if (request.method == "GET"):
+        serializer = UserScoreSerializer(user)
+        return JsonResponse(serializer.data, safe=False)
+    
+    elif request.method == "PUT":
+        data = JSONParser().parse(request)
+        serializer = UserScoreSerializer(user, data=data)
+        
+        if serializer.is_valid():
+            if serializer.validated_data['bestSpeed'] > user.__dict__['bestSpeed']:
+                serializer.save()
+            print(serializer.data)
+            return JsonResponse(serializer.data, status=200)
+        return JsonResponse(serializer.errors, status=400)

@@ -6,5 +6,7 @@ class User(models.Model):
     email = models.EmailField(max_length=128)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    bestSpeed = models.FloatField(default=0)
+
     def __str__(self):
         return self.username

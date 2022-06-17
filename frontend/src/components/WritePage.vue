@@ -1,7 +1,5 @@
 <template>
 <div>
-    <router-link to="/home">Home</router-link>
-    <br>
     <div>
         <input type="radio" value=1 v-model="mode">
         <label>Text + Music</label>
@@ -15,6 +13,7 @@
     <button class="btn btn-primary" @click="start">Start</button>
     <button @click="stop">Stop</button>
     <button @click="wordNumber++">add</button>
+    <button @click="wordNumber=text.length-1">last</button>
     <div>
         <span v-for="word, index in text"
             v-bind:key="word"
@@ -54,9 +53,6 @@ export default {
     components: {
         Button,
     },
-    inject: [
-        ['assets']
-    ],
     data() {
         return {
             inText: '',
@@ -133,7 +129,7 @@ export default {
                 
                 if (this.isCorrect && this.music.length && this.mode === 1) {
                     let currentNote = this.lettersCount % this.music.length
-                    if (this.music[currentNote] !== '*') {
+                    if (this.music[currentNote] !== '*' && this.music[currentNote] !== '-') {
                         let audio = new Audio(`/api/assets/audio/notes_${this.music[currentNote]}.mp3`)
                         audio.play()
                     }
@@ -156,6 +152,19 @@ export default {
         isCorrect() {
             if (!this.isCorrect) {
                 this.miss++
+            }
+        },
+        async win() {
+            if (this.win === 1) {
+                try {
+                    await axios.put(`/api/users/${localStorage.getItem("usernameW")}`, {
+                        bestSpeed: (this.lettersCount * 60000 / this.elapsedTime).toFixed(2)
+                    }).then((response) => {
+                        console.log(response.data)
+                    })
+                } catch (error) {
+                    console.log(error.response)
+                }
             }
         }
     }

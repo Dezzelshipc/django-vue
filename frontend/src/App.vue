@@ -1,6 +1,14 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <router-view v-if="isLogin"></router-view>
+    <div v-else>
+      <header>
+        <router-link to="/write">Write</router-link>
+        <router-link to="/home">Home</router-link>
+        <router-link to="/user">User</router-link>
+      </header>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -24,6 +32,11 @@ export default {
       this.$router.push('/login')
     }
   },
+  computed: {
+    isLogin() {
+      return this.$route.path === '/login' || this.$route.path === '/register'
+    }
+  }
 }
 </script>
 
