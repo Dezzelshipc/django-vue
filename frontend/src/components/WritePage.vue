@@ -1,5 +1,6 @@
 <template>
 <div>
+<<<<<<< HEAD
   <div>
     <input type="radio" value=1 v-model="mode">
     <label>Л.В. Бетховен - К Элизе</label>
@@ -30,6 +31,7 @@
     {{mode}}
 
   </div>
+
     <br>
     <Button @click="start">Start</Button>
     <Button @click="stop">Stop</Button>
