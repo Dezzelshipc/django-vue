@@ -27,7 +27,7 @@
     <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off" value=4 v-model="mode">
     <label class="btn btn-dark" for="option4"><img src="https://i.imgur.com/Ia0mmdp.jpg" width="100" height="100" class="imageMode"> </label>
 
-    {{mode}}
+
 
   </div>
 
