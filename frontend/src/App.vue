@@ -3,9 +3,7 @@
     <router-view v-if="isLogin"></router-view>
     <div v-else>
       <header>
-        <router-link to="/write">Write</router-link>
-        <router-link to="/home">Home</router-link>
-        <router-link to="/user">User</router-link>
+        <TabMenu :model="items" />
       </header>
       <router-view></router-view>
     </div>
@@ -13,11 +11,22 @@
 </template>
 
 <script>
+import TabMenu from 'primevue/tabmenu';
+
+
 export default {
+  components: {
+    TabMenu,
+  },
   name: 'App',
   data() {
     return {
       check: false,
+      items: [
+        {label: 'Home', icon: 'pi pi-fw pi-home', to: '/home' },
+        {label: 'Write', icon: 'pi pi-fw pi-pencil', to: '/write'},
+        {label: 'User', icon: 'pi pi-fw pi-user', to: 'user'},
+      ],
     }
   },
   updated() {

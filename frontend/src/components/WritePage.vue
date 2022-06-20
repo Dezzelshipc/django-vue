@@ -10,10 +10,10 @@
         {{ mode }}
     </div>
     <br>
-    <button class="btn btn-primary" @click="start">Start</button>
-    <button @click="stop">Stop</button>
-    <button @click="wordNumber++">add</button>
-    <button @click="wordNumber=text.length-1">last</button>
+    <Button @click="start">Start</Button>
+    <Button @click="stop">Stop</Button>
+    <Button @click="wordNumber++">add</Button>
+    <Button @click="wordNumber=text.length-1">last</Button>
     <div>
         <span v-for="word, index in text"
             v-bind:key="word"
@@ -23,8 +23,8 @@
         >{{ word }}</span>&nbsp;
         </span>
     </div>
-    
-    <input type="text" v-model="inText" @keypress.space="next" @keypress="press($event)">
+
+    <InputText type="text" v-model="inText" @keypress.space="next" @keypress="press($event)" />
     <br>
     {{ formattedElapsedTime }} {{ elapsedTime }} {{ this.timer }}
     <br>
@@ -39,19 +39,19 @@
     Победа: {{ win }} Ошибки: {{ miss }}
     <br>
     Знаков в минуту: {{ (lettersCount * 60000 / elapsedTime).toFixed(2) }} Знаки: {{ lettersCount }}
-    <Button></Button>
 </div>
 </template>
 
 <script>
 import Button from 'primevue/button'
-
+import InputText from 'primevue/inputtext'
 
 
 import axios from 'axios'
 export default {
     components: {
         Button,
+        InputText,
     },
     data() {
         return {
