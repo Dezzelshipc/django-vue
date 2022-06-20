@@ -1,14 +1,35 @@
 <template>
 <div>
-    <div>
-        <input type="radio" value=1 v-model="mode">
-        <label>Text + Music</label>
-        <br>
-        <input type="radio" value=2 v-model="mode">
-        <label>Random top 1000 russian words</label>
-        <br>
-        {{ mode }}
-    </div>
+  <div>
+    <input type="radio" value=1 v-model="mode">
+    <label>Л.В. Бетховен - К Элизе</label>
+    <br>
+    <input type="radio" value=2 v-model="mode">
+    <label>Random top 1000 russian words</label>
+    <br>
+    <input type="radio" value=3 v-model="mode">
+    <label>Мелодия номер 2</label>
+    <br>
+    <input type="radio" value=4 v-model="mode">
+    <label>Мелодия номер 3</label>
+    <br>
+
+
+    <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked value=1 v-model="mode">
+    <label class="btn btn-dark" for="option1"><img src="https://www.zvuki.ru/images/photo/64/64421.jpg" width="100" height="100" class="imageMode"> </label>
+
+    <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" value=2 v-model="mode">
+    <label class="btn btn-dark" for="option2"><img src="https://vsekidki.ru/uploads/posts/2016-07/1469367149_perspective-dice-six-faces-random.png" width="100" height="100" class="imageMode"> </label>
+
+    <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off" value=3 v-model="mode">
+    <label class="btn btn-dark" for="option3"><img src="https://i.imgur.com/eMfKGJG.jpg" width="100" height="100" class="imageMode"> </label>
+
+    <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off" value=4 v-model="mode">
+    <label class="btn btn-dark" for="option4"><img src="https://i.imgur.com/Ia0mmdp.jpg" width="100" height="100" class="imageMode"> </label>
+
+    {{mode}}
+
+  </div>
     <br>
     <Button @click="start">Start</Button>
     <Button @click="stop">Stop</Button>
@@ -19,7 +40,7 @@
             v-bind:key="word"
             class="text"
         ><span
-            :class="{ under : index == wordNumber }"
+            :class="{ under : index == wordNumber && started }"
         >{{ word }}</span>&nbsp;
         </span>
     </div>
@@ -52,6 +73,10 @@ export default {
     components: {
         Button,
         InputText,
+        
+    },
+    title() {
+        return "Writing Page"
     },
     data() {
         return {
@@ -81,8 +106,11 @@ export default {
                     const response = await axios.get('/api/assets/json/music.json')
                     const data = response.data
 
-                    this.text = data[0].text.split(' ')
-                    this.music = data[0].music.split(' ')
+                    const randText = Math.floor( Math.random() * data.text.length )
+                    const randMusic = Math.floor( Math.random() * data.music.length )
+                    console.log(randText, randMusic)
+                    this.text = data.text[ randText ].split(' ')
+                    this.music = data.music[ randMusic ].split(' ')
                 } else if (this.mode == 2) {
                     const response = await axios.get('/api/assets/json/words.json')
                     const data = response.data
@@ -177,5 +205,8 @@ export default {
 }
 .under {
     text-decoration: underline;
+}
+.imageMode {
+  border-radius: 5px;
 }
 </style>

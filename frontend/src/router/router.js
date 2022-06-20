@@ -4,6 +4,7 @@ import LoginUser from '../components/LoginUser'
 import Home from '../components/vHome'
 import RegisterUser from '../components/RegisterUser'
 import UserPage from '../components/UserPage'
+import LogoutPage from '../components/LogoutPage'
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -14,6 +15,7 @@ const router = createRouter({
         { path: '/write', component: WritePage },
         { path: '/home', component: Home },
         { path: '/user', component: UserPage },
+        { path: '/logout', component: LogoutPage },
     ]
 })
 
