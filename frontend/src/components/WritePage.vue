@@ -1,12 +1,12 @@
 <template>
 <div>
     <div>
-        <input type="radio" value=1 v-model="mode">
-        <label>Text + Music</label>
-        <br>
-        <input type="radio" value=2 v-model="mode">
-        <label>Random top 1000 russian words</label>
-        <br>
+        <div>
+            <input class="form-check-input" type="radio" value=1 v-model="mode">
+            <label class="form-check-label">Text + Music</label>
+            <input class="form-check-input" type="radio" value=2 v-model="mode">
+            <label class="form-check-label">Random top 1000 russian words</label>
+        </div>
         {{ mode }}
     </div>
     <br>
@@ -19,7 +19,7 @@
             v-bind:key="word"
             class="text"
         ><span
-            :class="{ under : index == wordNumber }"
+            :class="{ under : index == wordNumber && started }"
         >{{ word }}</span>&nbsp;
         </span>
     </div>
@@ -52,6 +52,10 @@ export default {
     components: {
         Button,
         InputText,
+        
+    },
+    title() {
+        return "Writing Page"
     },
     data() {
         return {
@@ -81,8 +85,11 @@ export default {
                     const response = await axios.get('/api/assets/json/music.json')
                     const data = response.data
 
-                    this.text = data[0].text.split(' ')
-                    this.music = data[0].music.split(' ')
+                    const randText = Math.floor( Math.random() * data.text.length )
+                    const randMusic = Math.floor( Math.random() * data.music.length )
+                    console.log(randText, randMusic)
+                    this.text = data.text[ randText ].split(' ')
+                    this.music = data.music[ randMusic ].split(' ')
                 } else if (this.mode == 2) {
                     const response = await axios.get('/api/assets/json/words.json')
                     const data = response.data
