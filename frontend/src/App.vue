@@ -29,7 +29,7 @@ export default {
         {label: 'Home', icon: 'pi pi-fw pi-home', to: '/home' },
         {label: 'Write', icon: 'pi pi-fw pi-pencil', to: '/write'},
         {label: 'User', icon: 'pi pi-fw pi-user', to: '/user'},
-        {label: 'Logout', icon: '', to: '/logout'}
+        {label: 'Logout', icon: 'pi pi-fw pi-sign-out', to: '/logout'}
       ],
       dev: true, // Только для разработки
     }

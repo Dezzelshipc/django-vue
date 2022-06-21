@@ -1,30 +1,44 @@
 <template>
 <div>
   <div>
-    <input type="radio" value=1 v-model="mode">
-    <label>Л.В. Бетховен - К Элизе</label>
-    <br>
-    <input type="radio" value=2 v-model="mode">
-    <label>Random top 1000 russian words</label>
-    <br>
-    <input type="radio" value=3 v-model="mode">
-    <label>Мелодия номер 2</label>
-    <br>
-    <input type="radio" value=4 v-model="mode">
-    <label>Мелодия номер 3</label>
+    <div>
+        <input type="radio" value=1 v-model="mode">
+        <label>Случайный текст</label>
+
+        <input type="radio" value=2 v-model="mode">
+        <label>Топ 1000 слов в русском языке</label>
+    </div>
+    <div>
+        <input type="radio" value=-2 v-model="musicTrack">
+        <label>Без трека</label>
+
+        <input type="radio" value=-1 v-model="musicTrack">
+        <label>Случайный трек</label>
+
+        <input type="radio" value=0 v-model="musicTrack">
+        <label>Л.В. Бетховен - К Элизе</label>
+        
+        <input type="radio" value=1 v-model="musicTrack">
+        <label>#1</label>
+        
+        <input type="radio" value=2 v-model="musicTrack">
+        <label>Мелодия номер 2</label>
+        
+        <input type="radio" value=3 v-model="musicTrack">
+        <label>Мелодия номер 3</label>
+    </div>
     <br>
 
+    <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" value=-1 v-model="musicTrack">
+    <label class="btn btn-dark" for="option1"><img src="https://vsekidki.ru/uploads/posts/2016-07/1469367149_perspective-dice-six-faces-random.png" width="100" height="100" class="imageMode"> </label>
 
-    <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked value=1 v-model="mode">
-    <label class="btn btn-dark" for="option1"><img src="https://www.zvuki.ru/images/photo/64/64421.jpg" width="100" height="100" class="imageMode"> </label>
+    <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" checked value=0 v-model="musicTrack">
+    <label class="btn btn-dark" for="option2"><img src="https://www.zvuki.ru/images/photo/64/64421.jpg" width="100" height="100" class="imageMode"> </label>
 
-    <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" value=2 v-model="mode">
-    <label class="btn btn-dark" for="option2"><img src="https://vsekidki.ru/uploads/posts/2016-07/1469367149_perspective-dice-six-faces-random.png" width="100" height="100" class="imageMode"> </label>
-
-    <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off" value=3 v-model="mode">
+    <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off" value=1 v-model="musicTrack">
     <label class="btn btn-dark" for="option3"><img src="https://i.imgur.com/eMfKGJG.jpg" width="100" height="100" class="imageMode"> </label>
 
-    <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off" value=4 v-model="mode">
+    <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off" value=2 v-model="musicTrack">
     <label class="btn btn-dark" for="option4"><img src="https://i.imgur.com/Ia0mmdp.jpg" width="100" height="100" class="imageMode"> </label>
 
 
@@ -32,7 +46,7 @@
   </div>
 
     <br>
-    <Button @click="start">Start</Button>
+    <Button @click="start">Start</Button> <!-- not for dev -->
     <Button @click="stop">Stop</Button>
     <Button @click="wordNumber++">add</Button>
     <Button @click="wordNumber=text.length-1">last</Button>
@@ -93,6 +107,8 @@ export default {
             elapsedTime: -3000,
             timer: undefined,
             mode: 1,
+            musicTrack: -1,
+            currentNote: 0,
         }
     },
     methods: {
@@ -101,20 +117,33 @@ export default {
                 this.inText = ''
                 this.elapsedTime = -3000
                 this.wordNumber = 0
+                this.currentNote = 0
 
                 this.lettersCount = 0
-                if (this.mode == 1) {
-                    const response = await axios.get('/api/assets/json/music.json')
-                    const data = response.data
 
-                    const randText = Math.floor( Math.random() * data.text.length )
-                    const randMusic = Math.floor( Math.random() * data.music.length )
-                    console.log(randText, randMusic)
-                    this.text = data.text[ randText ].split(' ')
-                    this.music = data.music[ randMusic ].split(' ')
+                if (this.musicTrack != -2) {
+                    const responseM = await axios.get('/api/assets/json/music.json')
+
+                    const data = responseM.data
+
+                    const idMusic = this.musicTrack == -1 ? Math.floor( Math.random() * data.length ) : this.musicTrack
+
+                    this.music = responseM.data[ idMusic ].split(' ')
+                } else {
+                    this.music = []
+                }
+
+                if (this.mode == 1) {
+                    const responseT = await axios.get('/api/assets/json/texts.json')
+
+                    const data = responseT.data
+                    
+                    const idText = Math.floor( Math.random() * data.length )
+                    this.text = data[ idText ].replace("—", "-").split(' ')
                 } else if (this.mode == 2) {
-                    const response = await axios.get('/api/assets/json/words.json')
-                    const data = response.data
+                    const responseW = await axios.get('/api/assets/json/words.json')
+
+                    const data = responseW.data
                     
                     this.text = data.sort(() => 0.5 - Math.random()).slice(0, 30 + Math.floor( Math.random() * 5))
                 }
@@ -127,7 +156,8 @@ export default {
                         this.elapsedTime += 10
                     }, 10)
                 }
-            } catch {
+            } catch (error) {
+                console.log(error)
                 this.text = ['Server', 'error']
             }
         },
@@ -135,6 +165,7 @@ export default {
             if (this.isCorrect && this.text[this.wordNumber].length === this.inText.length) {
                 event.preventDefault()
                 this.inText = ''
+                this.playNext()
                 if (this.wordNumber === this.text.length - 1) {
                     this.win = 1
                     this.stop()
@@ -146,6 +177,7 @@ export default {
         stop() {
             clearInterval(this.timer)
             this.timer = undefined
+            this.started = 0
         },
         reset() {
             this.elapsedTime = 0;
@@ -156,15 +188,18 @@ export default {
             } else {
                 this.lettersCount++
                 
-                if (this.isCorrect && this.music.length && this.mode === 1) {
-                    let currentNote = this.lettersCount % this.music.length
-                    if (this.music[currentNote] !== '*' && this.music[currentNote] !== '-') {
-                        let audio = new Audio(`/api/assets/audio/notes_${this.music[currentNote]}.mp3`)
-                        audio.play()
-                    }
+                if (this.isCorrect && this.music.length && this.text[this.wordNumber].startsWith(this.inText.trim() + event.key)) {
+                    this.playNext()
                 }
             }
         },
+        playNext() {
+            this.currentNote = (this.currentNote + 1) % this.music.length
+            if (this.music[this.currentNote] !== '*' && this.music[this.currentNote] !== '-') {
+                let audio = new Audio(`/api/assets/audio/notes_${this.music[this.currentNote]}.mp3`)
+                audio.play()
+            }
+        }
     },
     computed: {
         isCorrect() {
