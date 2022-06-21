@@ -46,8 +46,8 @@
   </div>
 
     <br>
-    <Button @click="start">Start</Button> <!-- not for dev -->
-    <Button @click="stop">Stop</Button>
+
+
     <Button @click="wordNumber++">add</Button>
     <Button @click="wordNumber=text.length-1">last</Button>
     <div>
@@ -59,8 +59,9 @@
         >{{ word }}</span>&nbsp;
         </span>
     </div>
-
+    <Button @click="start">Start</Button> <!-- not for dev -->
     <InputText type="text" v-model="inText" @keypress.space="next" @keypress="press($event)" />
+    <Button @click="stop">Stop</Button>
     <br>
     {{ formattedElapsedTime }} {{ elapsedTime }} {{ this.timer }}
     <br>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="content">
     <router-view v-if="isLogin && !dev"></router-view>
     <div v-else>
       <header>
@@ -66,6 +66,28 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-
+body {
+  background-image: url('https://images.saymedia-content.com/.image/t_share/MTc4NzM1OTc4MzE0MzQzOTM1/how-to-create-cool-website-backgrounds-the-ultimate-guide.png');
+  background-size: 100%;
+}
+.content {
+  width: 1000px;
+  min-height: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 30px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  background-color: rgba(255, 255, 255, .25);
+  backdrop-filter: blur(5px);
+  padding: 50px;
+}
+.p-tabmenu .p-tabmenu-nav{
+  border-radius: 30px;
+  margin-bottom: 30px;
+}
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+  border-radius: 30px;
+}
 @import url('~bootstrap/dist/css/bootstrap.css');
 </style>
