@@ -1,7 +1,9 @@
 <template>
   <v-vanta effect="fog" :options="options"></v-vanta>
-  <div class="boddy" id="boddy">
-    <TabMenu :model="items" />
+  <div>
+    <nav>
+      <TabMenu :model="items" />
+    </nav>
     <div class="content">
       <router-view v-if="isLogin && !dev"></router-view>
       <div v-else>
@@ -75,34 +77,38 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
 }
-/*body {*/
-/*  background-image: url('https://images.saymedia-content.com/.image/t_share/MTc4NzM1OTc4MzE0MzQzOTM1/how-to-create-cool-website-backgrounds-the-ultimate-guide.png');*/
-/*  background-size: 100%;*/
-/*}*/
 .content {
-  width: 1000px;
+  max-width: 1000px;
   min-height: 300px;
   margin-left: auto;
   margin-right: auto;
-  border-radius: 30px;
-  margin-top: 100px;
+  border-radius: 15px;
+  margin-top: 20px;
   margin-bottom: 100px;
   background-color: rgba(255, 255, 255, .25);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(15px);
   padding: 50px;
 }
 .p-tabmenu .p-tabmenu-nav{
-  border-radius: 30px;
+  border-radius: 15px;
   margin-bottom: 30px;
+  background-color: rgba(255, 255, 255, .25);
+  backdrop-filter: blur(15px);
+  margin-top: 30px;
 }
 .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
-  border-radius: 30px;
+  border-radius: 15px;
+}
+nav {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
 }
 @import url('~bootstrap/dist/css/bootstrap.css');
 </style>

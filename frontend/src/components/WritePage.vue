@@ -246,4 +246,9 @@ export default {
 .imageMode {
   border-radius: 5px;
 }
+.p-inputtext {
+  background: cornflowerblue;
+  background-color: rgba(255, 255, 255, .30);
+  backdrop-filter: blur(5px);
+}
 </style>
