@@ -43,15 +43,15 @@
           <div class="musicCard"><img
               src="https://www.ie.edu/insights/wp-content/uploads/2021/01/Simon-Beethoven-3.jpg"
               width="100"
-              height="100" class="imageMode"><h5>beethoven</h5></div>
+              height="100" class="imageMode"><h5>Beethoven</h5></div>
         </label>
         <label>
           <input type="radio" name="options" autocomplete="off" value=1
                  v-model="musicTrack">
           <div class="musicCard"><img
-              src="https://vsekidki.ru/uploads/posts/2016-07/1469367149_perspective-dice-six-faces-random.png"
+              src="https://images-na.ssl-images-amazon.com/images/I/61M3rDwh4qL.png"
               width="100"
-              height="100" class="imageMode"><h5>melody 1</h5></div>
+              height="100" class="imageMode"><h5>Tetris</h5></div>
         </label>
         <label>
           <input type="radio" name="options" autocomplete="off" value=2
