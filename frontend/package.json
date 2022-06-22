@@ -14,7 +14,8 @@
     "primeicons": "^5.0.0",
     "primevue": "^3.13.1",
     "vue": "^3.2.13",
-    "vue-router": "^4.0.16"
+    "vue-router": "^4.0.16",
+    "vue-vanta": "^0.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
