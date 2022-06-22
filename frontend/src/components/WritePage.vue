@@ -8,25 +8,25 @@
         <input type="radio" value=2 v-model="mode">
         <label>Топ 1000 слов в русском языке</label>
       </div>
-      <div>
-        <input type="radio" value=-2 v-model="musicTrack">
-        <label>Без трека</label>
+      <!--      <div>-->
+      <!--        <input type="radio" value=-2 v-model="musicTrack">-->
+      <!--        <label>Без трека</label>-->
 
-        <input type="radio" value=-1 v-model="musicTrack">
-        <label>Случайный трек</label>
+      <!--        <input type="radio" value=-1 v-model="musicTrack">-->
+      <!--        <label>Случайный трек</label>-->
 
-        <input type="radio" value=0 v-model="musicTrack">
-        <label>Л.В. Бетховен - К Элизе</label>
+      <!--        <input type="radio" value=0 v-model="musicTrack">-->
+      <!--        <label>Л.В. Бетховен - К Элизе</label>-->
 
-        <input type="radio" value=1 v-model="musicTrack">
-        <label>#1</label>
+      <!--        <input type="radio" value=1 v-model="musicTrack">-->
+      <!--        <label>#1</label>-->
 
-        <input type="radio" value=2 v-model="musicTrack">
-        <label>Мелодия номер 2</label>
+      <!--        <input type="radio" value=2 v-model="musicTrack">-->
+      <!--        <label>Мелодия номер 2</label>-->
 
-        <input type="radio" value=3 v-model="musicTrack">
-        <label>Мелодия номер 3</label>
-      </div>
+      <!--        <input type="radio" value=3 v-model="musicTrack">-->
+      <!--        <label>Мелодия номер 3</label>-->
+      <!--      </div>-->
       <br>
 
       <div class="musicMode">
@@ -74,8 +74,6 @@
                                       class="imageMode"><h5>music #3</h5></div>
         </label>
       </div>
-
-
     </div>
 
     <br>
@@ -289,22 +287,35 @@ export default {
 }
 
 .musicCard {
+  transition: 0.15s;
+  display: flex;
+  flex-direction: column;
   padding: 5px;
-  border: 2px solid rebeccapurple;
   border-radius: 5px;
-  margin-left: 5px;
-  margin-right: 5px;
   cursor: pointer;
-  background-color: rgba(255, 255, 255, .30);
-  backdrop-filter: blur(5px);
+  background-color: rgba(103,59,183, .30);
+  color: whitesmoke;
+}
+.musicCard:active {
+  background: chartreuse;
+}
+.musicCard:hover {
+  background-color: #e598ff;
 }
 
-.musicCard:hover {
-  background-color: rebeccapurple;
+.musicCard input {
+  order: 2;
+}
+
+.musicCard label {
+  order: 1;
+}
+
+input:checked + label {
+  background-color: rgb(103,59,183);
 }
 
 .p-inputtext {
-  background: cornflowerblue;
   background-color: rgba(255, 255, 255, .30);
   backdrop-filter: blur(5px);
 }
@@ -316,6 +327,6 @@ export default {
 
 .musicMode {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 </style>
