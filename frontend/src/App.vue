@@ -1,8 +1,32 @@
 <template>
   <v-vanta effect="fog" :options="options"></v-vanta>
   <div>
-    <nav>
-      <TabMenu :model="items" />
+<!--    <nav>-->
+<!--      <TabMenu :model="items" />-->
+<!--    </nav>-->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">MusicType</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="?#/home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="?#/write">Write</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="?#/user">User</a>
+            </li>
+          </ul>
+          <form class="d-flex" role="search">
+            <a class="nav-link" href="?#/logout">logout</a>
+          </form>
+        </div>
+      </div>
     </nav>
     <div class="content">
       <router-view v-if="isLogin && !dev"></router-view>
@@ -14,13 +38,14 @@
 </template>
 
 <script>
-import TabMenu from 'primevue/tabmenu'
+// import TabMenu from 'primevue/tabmenu'
+
 import VVanta from 'vue-vanta';
 
 
 export default {
   components: {
-    TabMenu,
+    // TabMenu,
     VVanta,
   },
   name: 'App',
@@ -42,12 +67,12 @@ export default {
         baseColor: 0xffffff,
       },
       check: false,
-      items: [
-        {label: 'Home', icon: 'pi pi-fw pi-home', to: '/home' },
-        {label: 'Write', icon: 'pi pi-fw pi-pencil', to: '/write'},
-        {label: 'User', icon: 'pi pi-fw pi-user', to: '/user'},
-        {label: 'Logout', icon: 'pi pi-fw pi-sign-out', to: '/logout'}
-      ],
+      // items: [
+      //   {label: 'Home', icon: 'pi pi-fw pi-home', to: '/home' },
+      //   {label: 'Write', icon: 'pi pi-fw pi-pencil', to: '/write'},
+      //   {label: 'User', icon: 'pi pi-fw pi-user', to: '/user'},
+      //   {label: 'Logout', icon: 'pi pi-fw pi-sign-out', to: '/logout'}
+      // ],
       dev: true, // Только для разработки
     }
   },
@@ -76,6 +101,7 @@ export default {
 </script>
 
 <style>
+@import url('~bootstrap/dist/css/bootstrap.css');
 #app {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   -webkit-font-smoothing: antialiased;
@@ -95,20 +121,25 @@ export default {
   backdrop-filter: blur(15px);
   padding: 50px;
 }
-.p-tabmenu .p-tabmenu-nav{
-  border-radius: 15px;
-  margin-bottom: 30px;
-  background-color: rgba(255, 255, 255, .25);
-  backdrop-filter: blur(15px);
-  margin-top: 30px;
-}
-.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
-  border-radius: 15px;
-}
+/*.p-tabmenu .p-tabmenu-nav{*/
+/*  border-radius: 15px;*/
+/*  margin-bottom: 30px;*/
+/*  background-color: rgba(255, 255, 255, .25);*/
+/*  backdrop-filter: blur(15px);*/
+/*  margin-top: 30px;*/
+/*}*/
+/*.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {*/
+/*  border-radius: 15px;*/
+/*}*/
 nav {
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
+  background-color: rgba(255, 255, 255, .25);
+  backdrop-filter: blur(15px);
 }
-@import url('~bootstrap/dist/css/bootstrap.css');
+.navbar {
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
 </style>
