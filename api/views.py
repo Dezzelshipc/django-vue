@@ -1,17 +1,15 @@
 import os
 import json
-from urllib import response
-from django import http
 from django.http import HttpResponse, JsonResponse, HttpResponseNotFound
 
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
-from .serializers import UserScoreSerializer, UserSerializer, UserRegisterSerializer, UserSerializerAll
+from .serializers import UserScoreSerializer, UserSerializer, UserRegisterSerializer, UserSerializerAll, UserTelegramSerializer
 
 from .models import User
+from telegrambot.bot import bot
 
 # Create your views here.
-
 @csrf_exempt
 def user(request):
     if(request.method == 'POST'):
@@ -92,6 +90,28 @@ def username_data(request, username):
         if serializer.is_valid():
             if serializer.validated_data['bestSpeed'] > user.__dict__['bestSpeed']:
                 serializer.save()
-            print(serializer.data)
+                send_score(request, username)
+
             return JsonResponse(serializer.data, status=200)
         return JsonResponse(serializer.errors, status=400)
+    elif request.method == "POST":
+        data = JSONParser().parse(request)
+        serializer = UserTelegramSerializer(user, data=data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=200)
+        return JsonResponse(serializer.errors, status=400)
+
+
+@csrf_exempt
+def send_score(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except:
+        return HttpResponse(status=404)
+    
+    serializer = UserTelegramSerializer(user)
+    user_id = serializer.data['telegram']
+    bot.send_message(850434834, text=user_id)
+    return HttpResponse(status=200)

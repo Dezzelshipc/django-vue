@@ -1,6 +1,6 @@
 version: '3.9'
 
-services:
+services:  
   web:
     build: .
     command: sh -c "python manage.py makemigrations && python /code/manage.py migrate --noinput && gunicorn backend.wsgi --bind 0.0.0.0:8000 -w 4"
@@ -21,18 +21,14 @@ services:
     networks:
       - nginx_network
 
-  # celery:
-  #   build: .
-  #   command: celery -A backend.celery worker -l INFO
-  #   volumes:
-  #     - .:/code
-  #   depends_on:
-  #     - db
-  #     - redis
-  #     - mongo
-  #   networks: 
-  #     - nginx_network
+  telegrambot:
+    build: ./telegrambot
+    command: sh -c "python bot_tasks.py"
+    # depends_on:
+    #   - web
+    networks:
+      - nginx_network
 
-networks:  # <-- and here
+networks:
   nginx_network:
     driver: bridge
