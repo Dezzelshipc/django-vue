@@ -1,25 +1,25 @@
 <template>
   <div>
     <div>
-<!--            <div>-->
-<!--              <input type="radio" value=-2 v-model="musicTrack">-->
-<!--              <label>Без трека</label>-->
+      <!--            <div>-->
+      <!--              <input type="radio" value=-2 v-model="musicTrack">-->
+      <!--              <label>Без трека</label>-->
 
-<!--              <input type="radio" value=-1 v-model="musicTrack">-->
-<!--              <label>Случайный трек</label>-->
+      <!--              <input type="radio" value=-1 v-model="musicTrack">-->
+      <!--              <label>Случайный трек</label>-->
 
-<!--              <input type="radio" value=0 v-model="musicTrack">-->
-<!--              <label>Л.В. Бетховен - К Элизе</label>-->
+      <!--              <input type="radio" value=0 v-model="musicTrack">-->
+      <!--              <label>Л.В. Бетховен - К Элизе</label>-->
 
-<!--              <input type="radio" value=1 v-model="musicTrack">-->
-<!--              <label>#1</label>-->
+      <!--              <input type="radio" value=1 v-model="musicTrack">-->
+      <!--              <label>#1</label>-->
 
-<!--              <input type="radio" value=2 v-model="musicTrack">-->
-<!--              <label>Мелодия номер 2</label>-->
+      <!--              <input type="radio" value=2 v-model="musicTrack">-->
+      <!--              <label>Мелодия номер 2</label>-->
 
-<!--              <input type="radio" value=3 v-model="musicTrack">-->
-<!--              <label>Мелодия номер 3</label>-->
-<!--            </div>-->
+      <!--              <input type="radio" value=3 v-model="musicTrack">-->
+      <!--              <label>Мелодия номер 3</label>-->
+      <!--            </div>-->
       <div class="musicMode">
         <label>
           <input type="radio" name="options" autocomplete="off" value=-2
@@ -57,9 +57,9 @@
           <input type="radio" name="options" autocomplete="off" value=2
                  v-model="musicTrack">
           <div class="musicCard"><img
-              src="https://vsekidki.ru/uploads/posts/2016-07/1469367149_perspective-dice-six-faces-random.png"
+              src="https://at-cdn-s02.audiotool.com/2018/09/08/documents/05rov985c3/0/cover256x256-fee67db15ed245a9886ae054730f3b98.jpg"
               width="100"
-              height="100" class="imageMode"><h5>melody 2</h5></div>
+              height="100" class="imageMode"><h5>death note</h5></div>
         </label>
       </div>
     </div>
@@ -72,14 +72,14 @@
     <br>
     <br>
     <br>
-<!--    <div>-->
-<!--      <input type="radio" value=1 v-model="mode">-->
-<!--      <label>Случайный текст</label>-->
+    <!--    <div>-->
+    <!--      <input type="radio" value=1 v-model="mode">-->
+    <!--      <label>Случайный текст</label>-->
 
-<!--      <input type="radio" value=2 v-model="mode">-->
-<!--      <label>Топ 1000 слов в русском языке</label>-->
-<!--    </div>-->
-    <div>
+    <!--      <input type="radio" value=2 v-model="mode">-->
+    <!--      <label>Топ 1000 слов в русском языке</label>-->
+    <!--    </div>-->
+    <h5>
         <span v-for="word, index in text"
               v-bind:key="word"
               class="text"
@@ -87,7 +87,7 @@
             :class="{ under : index == wordNumber && started }"
         >{{ word }}</span>&nbsp;
         </span>
-    </div>
+    </h5>
     <div class="inputString">
       <Button @click="start">Start</Button> <!-- not for dev -->
       <InputText type="text" v-model="inText" @keypress.space="next" @keypress="press($event)"/>
@@ -288,6 +288,9 @@ export default {
   border-radius: 5px;
   margin-left: 10px;
   margin-right: 10px;
+  margin-top: 8px;
+  margin-bottom: 5px;
+  pointer-events: none;
 }
 
 label > input{ /* HIDE RADIO */
@@ -295,21 +298,21 @@ label > input{ /* HIDE RADIO */
   position: absolute; /* Remove input from document flow */
 }
 label > input + .musicCard{ /* IMAGE STYLES */
-    transition: 0.15s;
-    display: flex;
-    flex-direction: column;
-    padding: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: rgba(103,59,183, .30);
-    color: whitesmoke;
-    border: 1px solid rgba(76, 76, 122, 0);
-  }
+  transition: 0.15s;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: rgba(103,59,183, .30);
+  color: whitesmoke;
+  border: 1px solid rgba(76, 76, 122, 0);
+}
 .musicCard:hover {
   border: 1px solid #2c3e50;;
 }
 label > input:checked + .musicCard{ /* (RADIO CHECKED) IMAGE STYLES */
-    background-color: rgb(103,59,183);
+  background-color: rgb(103,59,183);
 }
 
 /*.musicCard {*/
