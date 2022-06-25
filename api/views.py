@@ -94,14 +94,6 @@ def username_data(request, username):
 
             return JsonResponse(serializer.data, status=200)
         return JsonResponse(serializer.errors, status=400)
-    elif request.method == "POST":
-        data = JSONParser().parse(request)
-        serializer = UserTelegramSerializer(user, data=data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=200)
-        return JsonResponse(serializer.errors, status=400)
 
 
 @csrf_exempt
@@ -111,7 +103,6 @@ def send_score(request, username):
     except:
         return HttpResponse(status=404)
     
-    serializer = UserTelegramSerializer(user)
-    user_id = serializer.data['telegram']
-    bot.send_message(850434834, text=user_id)
+    user = user.__dict__
+    bot.send_message(chat_id=user['telegram'], text=f"Пользователь {username}, только что улучшил совй рекорд! Теперь это {user['bestSpeed']}")
     return HttpResponse(status=200)

@@ -1,6 +1,3 @@
-from dataclasses import field
-import email
-from pyexpat import model
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password, check_password
 from .models import User
@@ -64,6 +61,6 @@ class UserTelegramSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['telegram']
 
     def validate_telegram(self, telegram):
-        if telegram in ['', 'null', 'undefined']:
+        if telegram in ['', 'null', 'undefined', 0, None]:
             raise serializers.ValidationError('Telegram error')
         return telegram
