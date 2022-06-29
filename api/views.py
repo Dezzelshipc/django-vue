@@ -4,7 +4,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseNotFound
 
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
-from .serializers import UserScoreSerializer, UserSerializer, UserRegisterSerializer, UserSerializerAll, UserTelegramSerializer
+from .serializers import UserSerializer, UserRegisterSerializer, UserSerializerAll, UserDataSerializer
 
 from .models import User
 from telegrambot.bot import bot
@@ -80,16 +80,41 @@ def username_data(request, username):
         return HttpResponse(status=404)
 
     if (request.method == "GET"):
-        serializer = UserScoreSerializer(user)
+        serializer = UserDataSerializer(user)
         return JsonResponse(serializer.data, safe=False)
     
     elif request.method == "PUT":
-        data = JSONParser().parse(request)
-        serializer = UserScoreSerializer(user, data=data)
+        new_data = JSONParser().parse(request)['data']
+        new_data['speed'] = float(new_data['speed'])
+        user_data = user.__dict__['data']
+
+        send = 0
+        if user_data['bestSpeed'] < new_data['speed']:
+            send = 1
+            user_data['bestSpeed'] = new_data['speed']
+
+        if bool(new_data['mode']): # false - random, true - text
+            mode = "text"
+        else:
+            mode = "random"
+
+        user_data[mode]['bestSpeed'] = new_data['speed']
+        if len( user_data[mode]['last'] ) > 10:
+            user_data[mode]['last'].pop(0)
+        user_data[mode]['last'].append({
+            "speed": new_data['speed'],
+            "misses": int(new_data['misses']),
+            "letters": int(new_data['letters']),
+            "time": int(new_data['time']),
+        })
+
+        data = { 'data': user_data }
+
+        serializer = UserDataSerializer(user, data=data)
         
         if serializer.is_valid():
-            if serializer.validated_data['bestSpeed'] > user.__dict__['bestSpeed']:
-                serializer.save()
+            serializer.save()
+            if send:
                 send_score(request, username)
 
             return JsonResponse(serializer.data, status=200)
@@ -105,5 +130,5 @@ def send_score(request, username):
     
     user = user.__dict__
     for id in user['telegram']:
-        bot.send_message(chat_id=id, text=f"Пользователь {username}, только что улучшил совй рекорд! Теперь это {user['bestSpeed']}")
+        bot.send_message(chat_id=id, text=f"Пользователь {username}, только что улучшил совй рекорд! Теперь это {user['data']['bestSpeed']}")
     return HttpResponse(status=200)

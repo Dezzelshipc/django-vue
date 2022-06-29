@@ -43,17 +43,12 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class UserSerializerAll(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'password', 'email', 'telegram', 'created_at', 'bestSpeed']
+        fields = ['id', 'username', 'password', 'email', 'telegram', 'created_at', 'data']
 
-class UserScoreSerializer(serializers.HyperlinkedModelSerializer):
+class UserDataSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['bestSpeed']
-
-    def validate_bestSpeed(self, bestSpeed):
-        if bestSpeed in ['', 'null', 'undefined', 'inf']:
-            raise serializers.ValidationError('Speed error')
-        return bestSpeed
+        fields = ['data']
 
 class UserTelegramSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

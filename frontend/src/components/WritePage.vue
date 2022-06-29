@@ -152,7 +152,7 @@ export default {
       currentNote: 0,
       volume: 100,
 
-      checked: false,
+      checked: false, // false - random, true - text
     }
   },
   created() {
@@ -220,6 +220,8 @@ export default {
           return
         }
         this.wordNumber++
+      } else if (this.started){
+        this.playAudio('/api/assets/audio/error.mp3')
       }
     },
     stop() {
@@ -266,15 +268,24 @@ export default {
   },
   watch: {
     isCorrect() {
-      if (!this.isCorrect) {
+      if (!this.isCorrect && this.started) {
         this.miss++
+        this.playAudio('/api/assets/audio/error.mp3')
       }
     },
     async win() {
       if (this.win === 1) {
         try {
+          let data = {
+            "mode": this.checked, // false - random, true - text
+            "speed": (this.lettersCount * 60000 / this.elapsedTime).toFixed(2),
+            "misses": this.miss,
+            "letters": this.lettersCount,
+            "time": this.elapsedTime,
+          }
+          
           await axios.put(`/api/users/${localStorage.getItem("usernameW")}`, {
-            bestSpeed: (this.lettersCount * 60000 / this.elapsedTime).toFixed(2)
+            data: data,
           }).then((response) => {
             console.log(response.data)
           })
