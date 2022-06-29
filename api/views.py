@@ -4,7 +4,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseNotFound
 
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
-from .serializers import UserSerializer, UserRegisterSerializer, UserSerializerAll, UserDataSerializer
+from .serializers import UserSerializer, UserRegisterSerializer, UserSerializerAll, UserDataSerializer, UserSerializerDataAll
 
 from .models import User
 from telegrambot.bot import bot
@@ -33,11 +33,12 @@ def user(request):
 
 @csrf_exempt
 def users_all(request):
-    if(request.method == 'GET'):
-        users = User.objects.all()
+    users = User.objects.all()
+    if request.method == 'PUT':
+        serializer = UserSerializerDataAll(users, many=True)
+    else:
         serializer = UserSerializerAll(users, many=True)
-        return JsonResponse(serializer.data, safe=False)
-    return HttpResponse(status=404)  
+    return JsonResponse(serializer.data, safe=False)
 
 
 @csrf_exempt

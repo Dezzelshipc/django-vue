@@ -45,6 +45,11 @@ class UserSerializerAll(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ['id', 'username', 'password', 'email', 'telegram', 'created_at', 'data']
 
+class UserSerializerDataAll(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'data']
+
 class UserDataSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User

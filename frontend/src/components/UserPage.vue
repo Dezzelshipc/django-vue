@@ -18,10 +18,7 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            username: '',
-            bestSpeed: 0,
-            telegram: '',
-            response: '',
+            response: [],
         }
     },
     async created() {

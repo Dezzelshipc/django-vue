@@ -16,6 +16,9 @@
               <router-link class="nav-link" to="/home">Home</router-link>
             </li>
             <li class="nav-item">
+              <router-link class="nav-link" to="/leaderboard">Leaderboard</router-link>
+            </li>
+            <li class="nav-item">
               <router-link class="nav-link" to="/write">Write</router-link>
             </li>
             <li class="nav-item">
