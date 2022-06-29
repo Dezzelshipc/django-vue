@@ -1,8 +1,14 @@
 <template>
   <div>
-    {{ bestSpeed }}
+    <h1>
+        {{ username }}
+    </h1>
+    <div>
+        <h2>
+            Лучшая скорость: {{ bestSpeed }} знаков в секунду.
+        </h2>
+    </div>
     <br>
-    {{ username }}
   </div>
 </template>
 

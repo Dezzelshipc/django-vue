@@ -61,6 +61,6 @@ class UserTelegramSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['telegram']
 
     def validate_telegram(self, telegram):
-        if telegram in ['', 'null', 'undefined', 0, None]:
+        if ['', 'null', 'undefined', 0, None] in telegram:
             raise serializers.ValidationError('Telegram error')
         return telegram

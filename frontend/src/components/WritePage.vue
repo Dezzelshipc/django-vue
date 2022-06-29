@@ -20,6 +20,10 @@
       <!--              <input type="radio" value=3 v-model="musicTrack">-->
       <!--              <label>Мелодия номер 3</label>-->
       <!--            </div>-->
+      <div class="p-2">
+        Громкость: {{ volume }}%<br>
+        <Slider v-model="volume" :min="0" :max="100" />
+      </div>
       <div class="musicMode">
         <label>
           <input type="radio" name="options" autocomplete="off" value=-2
@@ -70,8 +74,6 @@
       <h6>random text</h6>
     </div>
     <br>
-    <br>
-    <br>
     <!--    <div>-->
     <!--      <input type="radio" value=1 v-model="mode">-->
     <!--      <label>Случайный текст</label>-->
@@ -79,7 +81,7 @@
     <!--      <input type="radio" value=2 v-model="mode">-->
     <!--      <label>Топ 1000 слов в русском языке</label>-->
     <!--    </div>-->
-    <h5>
+    <h5 :class="{ textContent : text.length }">
         <span v-for="word, index in text"
               v-bind:key="word"
               class="text"
@@ -117,7 +119,7 @@
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import InputSwitch from 'primevue/inputswitch'
-
+import Slider from 'primevue/slider'
 
 import axios from 'axios'
 
@@ -126,6 +128,7 @@ export default {
     Button,
     InputText,
     InputSwitch,
+    Slider,
 
   },
   title() {
@@ -147,13 +150,18 @@ export default {
       mode: 1,
       musicTrack: -1,
       currentNote: 0,
+      volume: 100,
 
       checked: false,
     }
   },
+  created() {
+    this.playAudio('/api/assets/audio/count_down.mp3', 0)
+  },
   methods: {
     async start() {
       try {
+        this.win = 0
         this.inText = ''
         this.elapsedTime = -3000
         this.wordNumber = 0
@@ -189,7 +197,7 @@ export default {
         }
         this.started = 1;
 
-        (new Audio(`/api/assets/audio/count_down.mp3`)).play()
+        this.playAudio('/api/assets/audio/count_down.mp3')
 
         if (!this.timer) {
           this.timer = setInterval(() => {
@@ -236,9 +244,13 @@ export default {
     playNext() {
       this.currentNote = (this.currentNote + 1) % this.music.length
       if (this.music[this.currentNote] !== '*' && this.music[this.currentNote] !== '-') {
-        let audio = new Audio(`/api/assets/audio/notes_${this.music[this.currentNote]}.mp3`)
-        audio.play()
+        this.playAudio(`/api/assets/audio/notes_${this.music[this.currentNote]}.mp3`)
       }
+    },
+    playAudio(url, volume = this.volume) {
+      let audio = new Audio(url)
+      audio.volume = volume * 0.01
+      audio.play()
     }
   },
   computed: {
@@ -282,6 +294,17 @@ export default {
 
 .under {
   text-decoration: underline;
+  color: rgb(255, 255, 255);
+}
+.textContent {
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 8px;
+  margin-bottom: 5px;
+  background-color: rgba(103,59,183, .70);
+  color: whitesmoke;
+  padding: 10px;
 }
 
 .imageMode {
@@ -383,5 +406,9 @@ label > input:checked + .musicCard{ /* (RADIO CHECKED) IMAGE STYLES */
 }
 .p-inputswitch .p-inputswitch-slider:before {
   background: #673AB7;
+}
+.p-slider {
+  max-width: 400px;
+  margin: auto;
 }
 </style>

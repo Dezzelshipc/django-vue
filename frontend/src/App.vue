@@ -1,38 +1,35 @@
 <template>
-  <v-vanta effect="fog" :options="options"></v-vanta>
   <div>
+  <v-vanta effect="fog" :options="options"></v-vanta>
 <!--    <nav>-->
 <!--      <TabMenu :model="items" />-->
 <!--    </nav>-->
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">MusicType</a>
+        <router-link class="navbar-brand" to="/">MusicType</router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="?#/home">Home</a>
+              <router-link class="nav-link" to="/home">Home</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="?#/write">Write</a>
+              <router-link class="nav-link" to="/write">Write</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="?#/user">User</a>
+              <router-link class="nav-link" to="/user">User</router-link>
             </li>
           </ul>
           <form class="d-flex" role="search">
-            <a class="nav-link" href="?#/logout">logout</a>
+            <router-link class="nav-link" to="/logout">Logout</router-link>
           </form>
         </div>
       </div>
     </nav>
     <div class="content">
-      <router-view v-if="isLogin && !dev"></router-view>
-      <div v-else>
-        <router-view></router-view>
-      </div>
+      <router-view></router-view>
     </div>
   </div>
 </template>

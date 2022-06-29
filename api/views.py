@@ -104,5 +104,6 @@ def send_score(request, username):
         return HttpResponse(status=404)
     
     user = user.__dict__
-    bot.send_message(chat_id=user['telegram'], text=f"Пользователь {username}, только что улучшил совй рекорд! Теперь это {user['bestSpeed']}")
+    for id in user['telegram']:
+        bot.send_message(chat_id=id, text=f"Пользователь {username}, только что улучшил совй рекорд! Теперь это {user['bestSpeed']}")
     return HttpResponse(status=200)
