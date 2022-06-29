@@ -1,13 +1,11 @@
 <template>
   <div>
-  <v-vanta effect="fog" :options="options"></v-vanta>
-<!--    <nav>-->
-<!--      <TabMenu :model="items" />-->
-<!--    </nav>-->
+    <v-vanta effect="fog" :options="options"></v-vanta>
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <router-link class="navbar-brand" to="/">MusicType</router-link>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -38,14 +36,12 @@
 </template>
 
 <script>
-// import TabMenu from 'primevue/tabmenu'
 
 import VVanta from 'vue-vanta';
 
 
 export default {
   components: {
-    // TabMenu,
     VVanta,
   },
   name: 'App',
@@ -102,6 +98,7 @@ export default {
 
 <style>
 @import url('~bootstrap/dist/css/bootstrap.css');
+
 #app {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   -webkit-font-smoothing: antialiased;
@@ -109,6 +106,7 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
 .content {
   max-width: 1000px;
   min-height: 300px;
@@ -120,17 +118,10 @@ export default {
   background-color: rgba(255, 255, 255, .25);
   backdrop-filter: blur(15px);
   padding: 50px;
+  box-shadow: 0 0 10px rgba(180, 180, 180, 0.5);
 }
-/*.p-tabmenu .p-tabmenu-nav{*/
-/*  border-radius: 15px;*/
-/*  margin-bottom: 30px;*/
-/*  background-color: rgba(255, 255, 255, .25);*/
-/*  backdrop-filter: blur(15px);*/
-/*  margin-top: 30px;*/
-/*}*/
-/*.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {*/
-/*  border-radius: 15px;*/
-/*}*/
+
+
 nav {
   max-width: 1000px;
   margin-left: auto;
@@ -138,8 +129,10 @@ nav {
   background-color: rgba(255, 255, 255, .25);
   backdrop-filter: blur(15px);
 }
+
 .navbar {
-    border-radius: 15px;
-    margin-bottom: 30px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  box-shadow: 0 0 10px rgba(180, 180, 180, 0.5);
 }
 </style>

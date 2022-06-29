@@ -1,25 +1,6 @@
 <template>
   <div>
     <div>
-      <!--            <div>-->
-      <!--              <input type="radio" value=-2 v-model="musicTrack">-->
-      <!--              <label>Без трека</label>-->
-
-      <!--              <input type="radio" value=-1 v-model="musicTrack">-->
-      <!--              <label>Случайный трек</label>-->
-
-      <!--              <input type="radio" value=0 v-model="musicTrack">-->
-      <!--              <label>Л.В. Бетховен - К Элизе</label>-->
-
-      <!--              <input type="radio" value=1 v-model="musicTrack">-->
-      <!--              <label>#1</label>-->
-
-      <!--              <input type="radio" value=2 v-model="musicTrack">-->
-      <!--              <label>Мелодия номер 2</label>-->
-
-      <!--              <input type="radio" value=3 v-model="musicTrack">-->
-      <!--              <label>Мелодия номер 3</label>-->
-      <!--            </div>-->
       <div class="p-2">
         Громкость: {{ volume }}%<br>
         <Slider v-model="volume" :min="0" :max="100" />
@@ -74,13 +55,6 @@
       <h6>random text</h6>
     </div>
     <br>
-    <!--    <div>-->
-    <!--      <input type="radio" value=1 v-model="mode">-->
-    <!--      <label>Случайный текст</label>-->
-
-    <!--      <input type="radio" value=2 v-model="mode">-->
-    <!--      <label>Топ 1000 слов в русском языке</label>-->
-    <!--    </div>-->
     <h5 :class="{ textContent : text.length }">
         <span v-for="word, index in text"
               v-bind:key="word"
@@ -97,8 +71,8 @@
     </div>
     {{ formattedElapsedTime }} {{ elapsedTime }} {{ this.timer }}
     <br>
-    <Button @click="wordNumber++">add</Button>
-    <Button @click="wordNumber=text.length-1">last</Button>
+<!--    <Button @click="wordNumber++">add</Button>-->
+<!--    <Button @click="wordNumber=text.length-1">last</Button>-->
     {{ inText }}
     <br>
     Сходится: {{ isCorrect }}
@@ -313,7 +287,7 @@ export default {
   margin-right: 10px;
   margin-top: 8px;
   margin-bottom: 5px;
-  background-color: rgba(103,59,183, .70);
+  background-color: rgba(103,59,183,.3);
   color: whitesmoke;
   padding: 10px;
 }
@@ -340,10 +314,10 @@ label > input + .musicCard{ /* IMAGE STYLES */
   cursor: pointer;
   background-color: rgba(103,59,183, .30);
   color: whitesmoke;
-  border: 1px solid rgba(76, 76, 122, 0);
+  border: 2px solid rgba(76, 76, 122, 0);
 }
 .musicCard:hover {
-  border: 1px solid #2c3e50;;
+  border: 2px solid rgb(103,59,183);
 }
 label > input:checked + .musicCard{ /* (RADIO CHECKED) IMAGE STYLES */
   background-color: rgb(103,59,183);
