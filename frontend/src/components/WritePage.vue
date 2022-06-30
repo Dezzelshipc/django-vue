@@ -1,7 +1,6 @@
 <template>
   <div>
     <div>
-
       <div class="musicMode">
         <label>
           <input type="radio" name="options" autocomplete="off" value=-2
@@ -61,22 +60,23 @@
               v-bind:key="word"
               class="text"
         ><span
-            :class="{ under : index == wordNumber && started }"
+            :class="{ under : index == wordNumber && started,
+            error : index == wordNumber && started && !(isCorrect && this.text[this.wordNumber].startsWith(this.inText)) }"
         >{{ word }}</span>&nbsp;
         </span>
     </h5>
     <div class="inputString">
-      <Button @click="start">Start</Button> <!-- not for dev -->
+      <Button @click="start">Start</Button>
       <InputText type="text" v-model="inText" @keypress.space="next" @keypress="press($event)"/>
-      <Button @click="stop">Stop</Button>
+      <Button @click="stop" :disabled="elapsedTime < 0 && started">Stop</Button>
     </div>
     {{ formattedElapsedTime }}
 <!--    {{ elapsedTime }} {{ this.timer }}-->
     <br>
 <!--    <Button @click="wordNumber++">add</Button>-->
-<!--    <Button @click="wordNumber=text.length-1">last</Button>-->
+   <Button @click="wordNumber=text.length-1">last</Button>
     {{ inText }}
-    <br>
+    <!-- <br>
     Сходится: {{ isCorrect }}
     <br>
     Длины слова: {{ this.started ? this.text[this.wordNumber].length : 0 }} Длина напечатанного: {{
@@ -87,7 +87,14 @@
     <br>
     Победа: {{ win }} Ошибки: {{ miss }}
     <br>
-    Знаков в минуту: {{ (lettersCount * 60000 / elapsedTime).toFixed(2) }} Знаки: {{ lettersCount }}
+    Знаков в минуту: {{ (lettersCount * 60000 / elapsedTime).toFixed(2) }} Знаки: {{ lettersCount }} -->
+    <div>
+      <h3>
+        Знаков в минуту: {{ (lettersCount * 60000 / elapsedTime).toFixed(2) }} 
+        <br>
+        Ошибки: {{ miss }}
+      </h3>
+    </div>
   </div>
 </template>
 
@@ -197,7 +204,7 @@ export default {
         }
         this.wordNumber++
       } else if (this.started){
-        this.playAudio('/api/assets/audio/error.mp3')
+        this.playAudio('/api/assets/audio/error.mp3', 0.5)
       }
     },
     stop() {
@@ -225,9 +232,9 @@ export default {
         this.playAudio(`/api/assets/audio/notes_${this.music[this.currentNote]}.mp3`)
       }
     },
-    playAudio(url, volume = this.volume) {
+    playAudio(url, mult = 1, volume = this.volume) {
       let audio = new Audio(url)
-      audio.volume = volume * 0.01
+      audio.volume = volume * 0.01 * mult
       audio.play()
     }
   },
@@ -246,14 +253,14 @@ export default {
     isCorrect() {
       if (!this.isCorrect && this.started) {
         this.miss++
-        this.playAudio('/api/assets/audio/error.mp3')
+        this.playAudio('/api/assets/audio/error.mp3', 0.5)
       }
     },
     async win() {
       if (this.win === 1) {
         try {
           let data = {
-            "mode": this.checked, // false - random, true - text
+            "mode": this.checked ? 'text' : 'random', // false - random, true - text
             "speed": (this.lettersCount * 60000 / this.elapsedTime).toFixed(2),
             "misses": this.miss,
             "letters": this.lettersCount,
@@ -282,6 +289,9 @@ export default {
 .under {
   text-decoration: underline;
   color: rgb(255, 255, 255);
+}
+.error {
+  color: #ff3535d0;
 }
 .textContent {
   border-radius: 5px;

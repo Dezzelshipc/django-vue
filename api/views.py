@@ -94,12 +94,11 @@ def username_data(request, username):
             send = 1
             user_data['bestSpeed'] = new_data['speed']
 
-        if bool(new_data['mode']): # false - random, true - text
-            mode = "text"
-        else:
-            mode = "random"
-
-        user_data[mode]['bestSpeed'] = new_data['speed']
+        mode = new_data['mode']
+        
+        if user_data[mode]['bestSpeed'] < new_data['speed']:
+            user_data[mode]['bestSpeed'] = new_data['speed']
+        
         if len( user_data[mode]['last'] ) > 10:
             user_data[mode]['last'].pop(0)
         user_data[mode]['last'].append({
