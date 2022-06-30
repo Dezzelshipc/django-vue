@@ -6,23 +6,17 @@
     <div class="modeTable">
       <div class="modeTableElement">
         <RadioButton name="tableMode" value="0" v-model="mode" />
-        <h4>all</h4>
+        <h4>All</h4>
       </div>
       <div class="modeTableElement">
         <RadioButton name="tableMode" value="1" v-model="mode"/>
-        <h4>text</h4>
+        <h4>Text</h4>
       </div>
       <div class="modeTableElement">
         <RadioButton name="tableMode" value="2" v-model="mode"/>
-        <h4>words</h4>
+        <h4>Words</h4>
       </div>
     </div>
-    <!--      <input type="radio" v-model="mode" value=0 name="all">-->
-    <!--      <label for="all">Все</label>-->
-    <!--      <input type="radio" v-model="mode" value=1 name="text">-->
-    <!--      <label for="text">Случайный текст</label>-->
-    <!--      <input type="radio" v-model="mode" value=2 name="random">-->
-    <!--      <label for="random">Случайные слова</label>-->
     <br>
     <table class="table">
       <thead>
@@ -104,7 +98,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .table {
   width: 100%;
   border: none;

@@ -3,39 +3,39 @@
     <tbody style="text-align: left">
     <tr>
         <td>
-            <label for="usr">Username</label>
+            <label for="usr"><h6>Username</h6></label>
         </td>
     </tr>
     <tr>
         <td>
-            <input type="text" v-model="username" id="usr">
+            <InputText class="p-inputtext" type="text" v-model="username" id="usr"/>
         </td>
     </tr>
     <tr>
         <td>
-            <label for="pass">Password</label>
+            <label for="pass"><h6>Password</h6></label>
         </td>
     </tr>
     <tr>
         <td>
-            <input :type="showPassword ? 'text' : 'password'" v-model="password" id="pass">
+            <InputText class="p-inputtext" :type="showPassword ? 'text' : 'password'" v-model="password" id="pass"/>
         </td>
     </tr>
     <tr>
         <td>
-            <input type="checkbox" v-model="showPassword" title="show pass" id="showpass">
-            <label for="showpass">Show Password</label>
+            <Checkbox class="align-middle" v-model="showPassword" title="show pass" id="showpass" :binary="true"  />
+            <label for="showpass"><h6>&nbsp;Show Password</h6></label>
         </td>
     </tr>
     <tr style="text-align: right">
         <td>
-            <button @click="login">Log in</button>
+            <Button @click="login">Log in</Button>
         </td>
     </tr>
     <tr style="text-align: right">
         <td>
             <router-link to="/register">
-                <button>Register</button>
+                <Button>Register</Button>
             </router-link>
         </td>
     </tr>
@@ -49,9 +49,18 @@
 </template>
 
 <script>
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
+import Checkbox from 'primevue/checkbox'
+
 import axios from 'axios'
 
 export default {
+    components: {
+        Button,
+        InputText,
+        Checkbox
+    },
     data() {
         return {
             showPassword: false,
@@ -87,9 +96,13 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .center {
     position: relative;
     margin: auto;
+}
+
+.p-inputtext {
+    padding: 4px;
 }
 </style>

@@ -50,9 +50,9 @@
       <Slider v-model="volume" :min="0" :max="100" />
     </div>
     <div class="switchMode">
-      <h6>top 1000 <br> random words</h6>
+      <h6>Top 1000<br>random words</h6>
       <InputSwitch v-model="checked"/>
-      <h6>random text</h6>
+      <h6>Random text</h6>
     </div>
     <br>
     <h5 :class="{ textContent : text.length }">
@@ -281,7 +281,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .text {
   display: inline-block;
 }

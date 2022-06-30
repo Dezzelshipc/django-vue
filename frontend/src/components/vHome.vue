@@ -21,7 +21,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .spaceman {
   margin-top: 20px;
   height: 225px;
