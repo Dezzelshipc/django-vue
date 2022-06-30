@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "bootstrap": "^5.2.0-beta1",
+    "chart.js": "^3.8.0",
     "core-js": "^3.8.3",
     "primeicons": "^5.0.0",
     "primevue": "^3.13.1",

@@ -66,17 +66,15 @@
         </span>
     </h5>
     <div class="inputString">
-      <Button @click="start">Start</Button>
+      <Button @click="start" :disabled="started">Start</Button>
       <InputText type="text" v-model="inText" @keypress.space="next" @keypress="press($event)"/>
-      <Button @click="stop" :disabled="elapsedTime < 0 && started">Stop</Button>
+      <Button @click="stop" :disabled="elapsedTime < 0">Stop</Button>
     </div>
-    {{ formattedElapsedTime }}
 <!--    {{ elapsedTime }} {{ this.timer }}-->
-    <br>
 <!--    <Button @click="wordNumber++">add</Button>-->
-   <Button @click="wordNumber=text.length-1">last</Button>
+    <!-- <Button @click="wordNumber=text.length-1">last</Button>
     {{ inText }}
-    <!-- <br>
+    <br>
     Сходится: {{ isCorrect }}
     <br>
     Длины слова: {{ this.started ? this.text[this.wordNumber].length : 0 }} Длина напечатанного: {{
@@ -90,6 +88,8 @@
     Знаков в минуту: {{ (lettersCount * 60000 / elapsedTime).toFixed(2) }} Знаки: {{ lettersCount }} -->
     <div>
       <h3>
+        {{ formattedElapsedTime }}
+        <br>
         Знаков в минуту: {{ (lettersCount * 60000 / elapsedTime).toFixed(2) }} 
         <br>
         Ошибки: {{ miss }}
@@ -216,7 +216,7 @@ export default {
       this.elapsedTime = 0;
     },
     press(event) {
-      if (this.elapsedTime < 0 || this.timer === undefined) {
+      if (this.elapsedTime < 0 || this.timer === undefined || (event.key == " " && this.inText.length == 0)) {
         event.preventDefault()
       } else {
         this.lettersCount++
