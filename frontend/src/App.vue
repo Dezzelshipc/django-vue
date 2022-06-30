@@ -1,52 +1,61 @@
 <template>
-  <div>
-    <v-vanta effect="fog" :options="options"></v-vanta>
-  </div>
-
-  <div class="all">
-    <div class="nothing"></div>
-    <nav class="navbar navbar-expand-lg">
-      <div class="container-fluid">
-        <router-link class="navbar-brand" to="/home"><h4>MusicType</h4></router-link>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <router-link class="nav-link" to="/home"><h5>Home</h5></router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/write"><h5>Write</h5></router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/leaderboard"><h5>Leaderboard</h5></router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/user"><h5>User</h5></router-link>
-            </li>
-          </ul>
-          <form class="d-flex" role="search">
-            <router-link class="nav-link" to="/logout"><h5>Login/Logout</h5></router-link>
-          </form>
+  <div class="all" id="all">
+    <div class="allContent">
+      <div class="nothing"></div>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+          <router-link class="navbar-brand" to="/home"><h4>MusicType</h4></router-link>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <router-link class="nav-link" to="/home"><h5>Home</h5></router-link>
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link" to="/write"><h5>Write</h5></router-link>
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link" to="/leaderboard"><h5>Leaderboard</h5></router-link>
+              </li>
+              <li class="nav-item">
+                <router-link class="nav-link" to="/user"><h5>User</h5></router-link>
+              </li>
+            </ul>
+            <form class="d-flex" role="search">
+              <router-link class="nav-link" to="/logout"><h5>Login/Logout</h5></router-link>
+            </form>
+          </div>
         </div>
+      </nav>
+      <div class="content">
+        <router-view></router-view>
       </div>
-    </nav>
-    <div class="content">
-      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
-
-import VVanta from 'vue-vanta';
-
+import Vanta from 'vanta/dist/vanta.fog.min';
+import * as THREE from 'three';
 
 export default {
-  components: {
-    VVanta,
+  mounted() {
+    this.vantaEffect = Vanta({
+      el: "#all",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      highlightColor: 0x5200ff,
+      midtoneColor: 0xffff,
+      lowlightColor: 0x2100ff,
+      baseColor: 0xe5f7ed,
+      THREE,
+    });
   },
   name: 'App',
   title() {
@@ -54,25 +63,7 @@ export default {
   },
   data() {
     return {
-      options: {
-        el: "#boddy",
-        mouseControls: true,
-        touchControls: true,
-        gyroControls: false,
-        minHeight: 1000.00,
-        minWidth: 200.00,
-        highlightColor: 0x96ff,
-        midtoneColor: 0xa400ff,
-        lowlightColor: 0x5b4f9d,
-        baseColor: 0xffffff,
-      },
       check: false,
-      // items: [
-      //   {label: 'Home', icon: 'pi pi-fw pi-home', to: '/home' },
-      //   {label: 'Write', icon: 'pi pi-fw pi-pencil', to: '/write'},
-      //   {label: 'User', icon: 'pi pi-fw pi-user', to: '/user'},
-      //   {label: 'Logout', icon: 'pi pi-fw pi-sign-out', to: '/logout'}
-      // ],
     }
   },
   created() {
@@ -121,7 +112,7 @@ export default {
   background-color: rgba(255, 255, 255, .25);
   backdrop-filter: blur(15px);
   padding: 50px;
-  box-shadow: 0 0 10px rgba(180, 180, 180, 0.5);
+  /*box-shadow: 0 0 10px rgba(180, 180, 180, 0.5);*/
 }
 
 
@@ -137,7 +128,7 @@ nav {
 .navbar {
   border-radius: 15px;
   margin-bottom: 30px;
-  box-shadow: 0 0 10px rgba(180, 180, 180, 0.5);
+  /*box-shadow: 0 0 10px rgba(180, 180, 180, 0.5);*/
   padding-right: 20px;
   padding-left: 20px;
 }
@@ -150,7 +141,7 @@ nav {
   color: whitesmoke;
   text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
 }
-.all {
+.allContent {
   width: 90%;
   margin-left: auto;
   margin-right: auto;
@@ -160,5 +151,9 @@ nav {
 }
 .d-flex {
   justify-content: center;
+}
+.all {
+  width: 100vw;
+  height: 100vh;
 }
 </style>
