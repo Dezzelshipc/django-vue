@@ -34,13 +34,19 @@ export default {
 				datasets: [
 					{
 						label: 'Случайные слова',
-						backgroundColor: '#42A5F5',
-						data: []
+						backgroundColor: 'rgba(66,165,245,0.5)',
+            borderColor: 'rgb(66,165,245)',
+						data: [],
+            fill: true,
+            tension: .4,
 					},
 					{
 						label: 'Случайный текст',
-						backgroundColor: '#9CCC65',
-						data: []
+						backgroundColor: 'rgba(154,101,204,0.5)',
+            borderColor: 'rgb(154,101,204)',
+						data: [],
+            fill: true,
+            tension: .4,
 					}
 				]
             },

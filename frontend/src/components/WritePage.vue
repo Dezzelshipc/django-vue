@@ -87,13 +87,13 @@
     <br>
     Знаков в минуту: {{ (lettersCount * 60000 / elapsedTime).toFixed(2) }} Знаки: {{ lettersCount }} -->
     <div>
-      <h3>
+      <h5>
         {{ formattedElapsedTime }}
         <br>
         Знаков в минуту: {{ (lettersCount * 60000 / elapsedTime).toFixed(2) }} 
         <br>
         Ошибки: {{ miss }}
-      </h3>
+      </h5>
     </div>
   </div>
 </template>
@@ -365,7 +365,11 @@ label > input:checked + .musicCard{ /* (RADIO CHECKED) IMAGE STYLES */
   margin-left: auto;
   background-color: rgba(103,59,183, .30);
   align-items: center;
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+
   color: whitesmoke;
 
 }

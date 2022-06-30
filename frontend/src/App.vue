@@ -44,7 +44,7 @@ import * as THREE from 'three';
 export default {
   mounted() {
     this.vantaEffect = Vanta({
-      el: "#all",
+      el: "body",
       mouseControls: true,
       touchControls: true,
       gyroControls: false,
@@ -153,7 +153,9 @@ nav {
   justify-content: center;
 }
 .all {
-  width: 100vw;
   height: 100vh;
+}
+body {
+  background-color: #BBE4F1;
 }
 </style>

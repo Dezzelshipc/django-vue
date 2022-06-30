@@ -6,6 +6,7 @@
     <h2>
       Если вы хотите получать оповещения о рекордах какого-то пользователя, вы можете сделать это с помощью телеграм бота: <a href="https://t.me/DjangoVueProjBot">@DjangoVueProjBot</a>
     </h2>
+    <img src="@/assets/img/spaceman.png" class="spaceman">
   </div>
 </template>
 
@@ -21,5 +22,11 @@ export default {
 </script>
 
 <style>
-
+.spaceman {
+  margin-top: 20px;
+  height: 225px;
+  width: 225px;
+  margin-right: auto;
+  margin-left: auto;
+}
 </style>
