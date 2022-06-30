@@ -3,7 +3,7 @@
     <v-vanta effect="fog" :options="options"></v-vanta>
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
-        <router-link class="navbar-brand" to="/">MusicType</router-link>
+        <router-link class="navbar-brand" to="/home"><h4>MusicType</h4></router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -11,20 +11,20 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <router-link class="nav-link" to="/home">Home</router-link>
+              <router-link class="nav-link" to="/home"><h5>Home</h5></router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/leaderboard">Leaderboard</router-link>
+              <router-link class="nav-link" to="/write"><h5>Write</h5></router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/write">Write</router-link>
+              <router-link class="nav-link" to="/leaderboard"><h5>Leaderboard</h5></router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/user">User</router-link>
+              <router-link class="nav-link" to="/user"><h5>User</h5></router-link>
             </li>
           </ul>
           <form class="d-flex" role="search">
-            <router-link class="nav-link" to="/logout">Logout</router-link>
+            <router-link class="nav-link" to="/logout"><h5>Login/Logout</h5></router-link>
           </form>
         </div>
       </div>
@@ -128,11 +128,21 @@ nav {
   margin-right: auto;
   background-color: rgba(255, 255, 255, .25);
   backdrop-filter: blur(15px);
+
 }
 
 .navbar {
   border-radius: 15px;
   margin-bottom: 30px;
   box-shadow: 0 0 10px rgba(180, 180, 180, 0.5);
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-link {
+  color: whitesmoke;
+}
+.navbar-brand {
+  color: whitesmoke;
+  text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
 }
 </style>

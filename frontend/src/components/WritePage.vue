@@ -1,10 +1,7 @@
 <template>
   <div>
     <div>
-      <div class="p-2">
-        Громкость: {{ volume }}%<br>
-        <Slider v-model="volume" :min="0" :max="100" />
-      </div>
+
       <div class="musicMode">
         <label>
           <input type="radio" name="options" autocomplete="off" value=-2
@@ -49,6 +46,10 @@
       </div>
     </div>
     <br>
+    <div class="p-2">
+      <h6>Volume: {{ volume }}%</h6>
+      <Slider v-model="volume" :min="0" :max="100" />
+    </div>
     <div class="switchMode">
       <h6>top 1000 <br> random words</h6>
       <InputSwitch v-model="checked"/>
@@ -69,7 +70,8 @@
       <InputText type="text" v-model="inText" @keypress.space="next" @keypress="press($event)"/>
       <Button @click="stop">Stop</Button>
     </div>
-    {{ formattedElapsedTime }} {{ elapsedTime }} {{ this.timer }}
+    {{ formattedElapsedTime }}
+<!--    {{ elapsedTime }} {{ this.timer }}-->
     <br>
 <!--    <Button @click="wordNumber++">add</Button>-->
 <!--    <Button @click="wordNumber=text.length-1">last</Button>-->
@@ -289,7 +291,10 @@ export default {
   margin-bottom: 5px;
   background-color: rgba(103,59,183,.3);
   color: whitesmoke;
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 25px;
+  padding-top: 20px;
 }
 
 .imageMode {
@@ -322,35 +327,6 @@ label > input + .musicCard{ /* IMAGE STYLES */
 label > input:checked + .musicCard{ /* (RADIO CHECKED) IMAGE STYLES */
   background-color: rgb(103,59,183);
 }
-
-/*.musicCard {*/
-/*  transition: 0.15s;*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  padding: 5px;*/
-/*  border-radius: 5px;*/
-/*  cursor: pointer;*/
-/*  background-color: rgba(103,59,183, .30);*/
-/*  color: whitesmoke;*/
-/*}*/
-/*.musicCard:active {*/
-/*  background: chartreuse;*/
-/*}*/
-/*.musicCard:hover {*/
-/*  background-color: #e598ff;*/
-/*}*/
-
-/*.musicCard input {*/
-/*  order: 2;*/
-/*}*/
-
-/*.musicCard label {*/
-/*  order: 1;*/
-/*}*/
-
-/*input:checked + label {*/
-/*  background-color: rgb(103,59,183);*/
-/*}*/
 
 .p-inputtext {
   background-color: rgba(255, 255, 255, .30);
