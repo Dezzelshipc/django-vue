@@ -45,6 +45,7 @@ docker-compose up --build [container-name]
 ```
 
 #### Container names
-- frontend
+- db
 - web
-- celery (tba)
+- frontend
+- telegrambot
