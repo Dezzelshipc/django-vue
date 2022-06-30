@@ -7,24 +7,29 @@
     <input type="radio" v-model="mode" value=2 name="random">
     <label for="random">Случайные слова</label>
     <br>
-    {{ listUsers }}
-    <table>
-        <tr>
-            <td>
-                Пользователь
-            </td>
-            <td>
-                Скорость
-            </td>
-        </tr>
-        <tr v-for="user in listUsers" v-bind:key="user">
-            <td>
-                {{ user.username }}
-            </td>
-            <td>
-                {{ user.speed }}
-            </td>
-        </tr>
+    <h2>Top results</h2>
+    <!--    {{ listUsers }}-->
+    <table class="table">
+      <thead>
+      <tr>
+        <th>
+          Пользователь
+        </th>
+        <th>
+          Скорость
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="user in listUsers" v-bind:key="user">
+        <td>
+          {{ user.username }}
+        </td>
+        <td>
+          {{ user.speed }}
+        </td>
+      </tr>
+      </tbody>
     </table>
   </div>
 </template>
@@ -81,5 +86,51 @@ export default {
 </script>
 
 <style>
-
+.table {
+  width: 100%;
+  border: none;
+  border-collapse: separate;
+  background-color: white;
+  border-radius: 10px;
+}
+.table thead th {
+  font-weight: bold;
+  text-align: left;
+  border: none;
+  padding: 10px 15px;
+  background: #EDEDED;
+  font-size: 14px;
+  border-top: 1px solid #ddd;
+}
+.table tr th:first-child, .table tr td:first-child {
+  border-left: 1px solid #ddd;
+}
+.table tr th:last-child, .table tr td:last-child {
+  border-right: 1px solid #ddd;
+}
+.table thead tr th:first-child {
+  border-radius: 10px 0 0 0;
+}
+.table thead tr th:last-child {
+  border-radius: 0 10px 0 0;
+}
+.table tbody td {
+  text-align: left;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  vertical-align: top;
+}
+.table tbody tr:nth-child(even) {
+  background: #F8F8F8;
+}
+.table tbody tr:last-child td{
+  border-bottom: 1px solid #ddd;
+}
+.table tbody tr:last-child td:first-child {
+  border-radius: 0 0 0 10px;
+}
+.table tbody tr:last-child td:last-child {
+  border-radius: 0 0 10px 0;
+}
 </style>

@@ -330,6 +330,9 @@ label > input + .musicCard{ /* IMAGE STYLES */
   background-color: rgba(103,59,183, .30);
   color: whitesmoke;
   border: 2px solid rgba(76, 76, 122, 0);
+  margin-bottom: 15px;
+  margin-left: 10px;
+  margin-right: 5px;
 }
 .musicCard:hover {
   border: 2px solid rgb(103,59,183);
@@ -351,6 +354,7 @@ label > input:checked + .musicCard{ /* (RADIO CHECKED) IMAGE STYLES */
 .musicMode {
   display: flex;
   justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 .switchMode {
   display: flex;

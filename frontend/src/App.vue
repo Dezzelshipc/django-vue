@@ -1,6 +1,10 @@
 <template>
   <div>
     <v-vanta effect="fog" :options="options"></v-vanta>
+  </div>
+
+  <div class="all">
+    <div class="nothing"></div>
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <router-link class="navbar-brand" to="/home"><h4>MusicType</h4></router-link>
@@ -137,11 +141,24 @@ nav {
   padding-right: 20px;
   padding-left: 20px;
 }
+
 .nav-link {
   color: whitesmoke;
 }
+
 .navbar-brand {
   color: whitesmoke;
-  text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+  text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
+}
+.all {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.nothing {
+  height: 20px;
+}
+.d-flex {
+  justify-content: center;
 }
 </style>
