@@ -22,8 +22,12 @@ export default {
     components: {
         Chart
     },
+    title() {
+        return this.username
+    },
     data() {
         return {
+            username: '',
             response: [],
             basicData: {
 				labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],

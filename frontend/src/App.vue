@@ -69,14 +69,14 @@ export default {
       //   {label: 'User', icon: 'pi pi-fw pi-user', to: '/user'},
       //   {label: 'Logout', icon: 'pi pi-fw pi-sign-out', to: '/logout'}
       // ],
-      dev: true, // Только для разработки
+      dev: false, // Только для разработки
     }
   },
   updated() {
     if (!this.dev) {
       if (!localStorage.getItem('usernameW') && this.$route.path !== '/register') {
         this.$router.push('/login')
-      } else if (localStorage.getItem('usernameW') && (this.$route.path === '/login' || this.$route.path === '/register')) {
+      } else if (localStorage.getItem('usernameW') && (this.isLogin)) {
         this.$router.push('/home')
       }
     }
@@ -85,12 +85,14 @@ export default {
     if (!this.dev) {
       if (!localStorage.getItem('usernameW')) {
         this.$router.push('/login')
+      } else if (localStorage.getItem('usernameW') && (this.isLogin)) {
+        this.$router.push('/home')
       }
     }
   },
   computed: {
     isLogin() {
-      return this.$route.path === '/login' || this.$route.path === '/register'
+      return this.$route.path === '/login' || this.$route.path === '/register' || this.$route.path === '/'
     }
   }
 }

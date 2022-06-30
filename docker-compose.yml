@@ -39,16 +39,16 @@ services:
     networks:
       - network
 
-  # telegrambot:
-  #   build: .
-  #   command: python run_bot.py
-  #   depends_on:
-  #     - web
-  #     - db
-  #   networks:
-  #     - network
-  #   env_file:
-  #     - .env
+  telegrambot:
+    build: .
+    command: python run_bot.py
+    depends_on:
+      - web
+      - db
+    networks:
+      - network
+    env_file:
+      - .env
 
 networks:
   network:

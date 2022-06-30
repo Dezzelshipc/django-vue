@@ -60,20 +60,24 @@ export default {
             textResponse: '',
         }
     },
+    title() {
+        return "Login"
+    },
     methods: {
         async login() {
             await axios.put(`/api/users/`, {
                 username: this.username,
                 password: this.password,
-            }).then(response =>{
-                console.log(response)
-
+            }).then(() =>{
                 localStorage.setItem('usernameW', this.username)
                 this.textResponse = 'Success!'
                 this.$router.push('/home')
             }).catch(error => {
                 console.log(error)
                 this.textResponse = Object.values( error.response.data ).map(x => x[0]).join('\r\n')
+                if (this.textResponse.length > 5) {
+                    this.textResponse = "Server error"
+                }
                 console.log(this.textResponse)
                 
                 // this.textResponse = 'Username or password error'

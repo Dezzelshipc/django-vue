@@ -71,6 +71,9 @@ export default {
       textResponse: '',
     }
   },
+  title() {
+    return "Register"
+  },
   methods: {
     async register() {
         await axios.post('/api/users/', {
