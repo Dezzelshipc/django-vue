@@ -69,30 +69,27 @@ export default {
       //   {label: 'User', icon: 'pi pi-fw pi-user', to: '/user'},
       //   {label: 'Logout', icon: 'pi pi-fw pi-sign-out', to: '/logout'}
       // ],
-      dev: false, // Только для разработки
-    }
-  },
-  updated() {
-    if (!this.dev) {
-      if (!localStorage.getItem('usernameW') && this.$route.path !== '/register') {
-        this.$router.push('/login')
-      } else if (localStorage.getItem('usernameW') && (this.isLogin)) {
-        this.$router.push('/home')
-      }
     }
   },
   created() {
-    if (!this.dev) {
-      if (!localStorage.getItem('usernameW')) {
-        this.$router.push('/login')
-      } else if (localStorage.getItem('usernameW') && (this.isLogin)) {
-        this.$router.push('/home')
-      }
+    if (!localStorage.getItem('usernameW')) {
+      this.$router.push('/login')
+    } else if (localStorage.getItem('usernameW') && (this.isLogin)) {
+      this.$router.push('/home')
     }
   },
   computed: {
     isLogin() {
       return this.$route.path === '/login' || this.$route.path === '/register' || this.$route.path === '/'
+    }
+  },
+  watch: {
+    $route() {
+      if (!localStorage.getItem('usernameW') && this.$route.path !== '/register') {
+        this.$router.push('/login')
+      } else if (localStorage.getItem('usernameW') && (this.isLogin)) {
+        this.$router.push('/home')
+      }
     }
   }
 }
