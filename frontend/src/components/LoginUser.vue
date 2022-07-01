@@ -105,4 +105,8 @@ export default {
 .p-inputtext {
     padding: 4px;
 }
+
+router-link {
+    text-decoration: none;
+}
 </style>

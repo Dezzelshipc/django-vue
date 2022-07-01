@@ -153,7 +153,7 @@ nav {
   justify-content: center;
 }
 .all {
-  height: 100%;
+  height: max(100%, 100vh);
 }
 body {
   background-color: #BBE4F1;
