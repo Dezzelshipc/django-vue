@@ -153,11 +153,12 @@ nav {
   justify-content: center;
 }
 .all {
-  height: max(100%, 100vh);
+  height: 100%;
 }
 body {
   background-color: #BBE4F1;
   margin: 0;
   padding: 0;
+  height: max(100%, 100vh);
 }
 </style>
