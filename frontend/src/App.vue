@@ -159,7 +159,7 @@ body {
   background-color: #BBE4F1;
   margin: 0;
   padding: 0;
-  height: 100vh
+  height: 200vh
 }
 
 html {
